@@ -464,9 +464,19 @@ extern	cvar_t	*j_forward_axis;
 extern	cvar_t	*j_side_axis;
 extern	cvar_t	*j_up_axis;
 
-extern cvar_t  *cl_timedemo;
-extern	cvar_t	*cl_aviFrameRate;
-extern	cvar_t	*cl_aviMotionJpeg;
+//extern cvar_t  *cl_timedemo;
+//extern cvar_t	*cl_aviFrameRate;
+//extern cvar_t	*cl_aviMotionJpeg;
+
+extern cvar_t* cl_timedemo;
+extern cvar_t* cl_aviFrameRate;
+extern cvar_t* cl_aviFrameRateDivider;
+extern cvar_t* cl_aviCodec;
+extern cvar_t* cl_aviAllowLargeFiles;
+extern cvar_t* cl_aviFetchMode;
+extern cvar_t* cl_aviExtension;
+extern cvar_t* cl_freezeDemoPauseVideoRecording;
+extern cvar_t* cl_freezeDemoPauseMusic;
 
 extern cvar_t  *cl_activeAction;
 
