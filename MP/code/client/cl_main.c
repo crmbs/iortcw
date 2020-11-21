@@ -200,6 +200,8 @@ serverStatus_t cl_serverStatusList[MAX_SERVERSTATUSREQUESTS];
 
 double Overf = 0.0;
 
+aviFileData_t afdMain;
+
 // DHM - Nerve :: Have we heard from the auto-update server this session?
 qboolean autoupdateChecked;
 qboolean autoupdateStarted;

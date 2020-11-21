@@ -125,8 +125,6 @@ typedef struct aviFileData_s
 } aviFileData_t;
 
 extern aviFileData_t afdMain;
-extern aviFileData_t afdLeft;
-extern aviFileData_t afdRight;
 
 qboolean CL_VideoRecording (const aviFileData_t *afd);
 

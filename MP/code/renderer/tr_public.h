@@ -204,8 +204,6 @@ typedef struct {
 	qboolean (*Sys_LowPhysicalMemory)( void );
 
 	aviFileData_t* afdMain;
-	aviFileData_t* afdLeft;
-	aviFileData_t* afdRight;
 } refimport_t;
 
 
