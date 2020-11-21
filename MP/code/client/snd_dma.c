@@ -1440,6 +1440,8 @@ void S_Base_Update( void ) {
 	S_Update_();
 }
 
+static double overf = 0.0;
+
 void S_GetSoundtime(void)
 {
 	int		samplepos;
