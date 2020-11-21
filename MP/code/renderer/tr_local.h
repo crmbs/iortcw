@@ -1897,8 +1897,10 @@ void RE_SaveJPG(char * filename, int quality, int image_width, int image_height,
                 unsigned char *image_buffer, int padding);
 size_t RE_SaveJPGToBuffer(byte *buffer, size_t bufSize, int quality,
 		          int image_width, int image_height, byte *image_buffer, int padding);
-void RE_TakeVideoFrame( int width, int height,
-		byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
+//void RE_TakeVideoFrame( int width, int height,
+//		byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
+
+void RE_TakeVideoFrame(aviFileData_t* afd, int width, int height, byte* captureBuffer, byte* encodeBuffer, qboolean motionJpeg, qboolean avi, qboolean tga, qboolean jpg, qboolean png, int picCount, char* givenFileName);
 
 void R_DrawElements( int numIndexes, const glIndex_t *indexes );
 void VectorArrayNormalize( vec4_t *normals, unsigned int count );
