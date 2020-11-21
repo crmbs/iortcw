@@ -29,6 +29,8 @@ If you have questions concerning this license or the applicable additional terms
 // cl_main.c  -- client main loop
 
 #include "client.h"
+#include "cl_avi.h"
+#include "snd_local.h"
 #include <limits.h>
 
 #ifdef __linux__
