@@ -779,6 +779,8 @@ int     FS_FOpenFileByMode( const char *qpath, fileHandle_t *f, fsMode_t mode );
 int     FS_Seek( fileHandle_t f, long offset, int origin );
 // seek on a file
 
+FILE* FS_FileForHandle(fileHandle_t f);
+
 qboolean FS_FilenameCompare( const char *s1, const char *s2 );
 
 const char *FS_LoadedPakNames( void );
