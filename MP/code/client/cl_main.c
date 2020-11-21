@@ -196,6 +196,8 @@ typedef struct serverStatus_s
 
 serverStatus_t cl_serverStatusList[MAX_SERVERSTATUSREQUESTS];
 
+double Overf = 0.0;
+
 // DHM - Nerve :: Have we heard from the auto-update server this session?
 qboolean autoupdateChecked;
 qboolean autoupdateStarted;
@@ -3149,10 +3151,14 @@ CL_Frame
 ==================
 */
 void CL_Frame( int msec ) {
+	double f;
+	double blurFramesFactor;
 
 	if ( !com_cl_running->integer ) {
 		return;
 	}
+
+	blurFramesFactor = 1.0;
 
 #ifdef USE_CURL
 	if(clc.downloadCURLM) {
@@ -3187,24 +3193,38 @@ void CL_Frame( int msec ) {
 	// if recording an avi, lock to a fixed fps
 	if ( ( CL_VideoRecording( ) && cl_aviFrameRate->integer && msec ) || ( cl_avidemo->integer && msec ) ) {
 		// save the current screen
-		if ( clc.state == CA_ACTIVE || cl_forceavidemo->integer ) {
-			if ( cl_avidemo->integer ) {	// Legacy (screenshot) method
-				Cbuf_ExecuteText( EXEC_NOW, "screenshot silent\n" );
+		if (clc.state == CA_ACTIVE || cl_forceavidemo->integer) {
+			int blurFrames;
+			double frameRateDivider;
 
-				// fixed time for next frame
-				msec = ( 1000 / cl_avidemo->integer ) * com_timescale->value;
-				if ( msec == 0 ) {
-					msec = 1;
-				}
-			} else {			// ioquake3 method
-				float fps = MIN(cl_aviFrameRate->value * com_timescale->value, 1000.0f);
-				float frameDuration = MAX(1000.0f / fps, 1.0f) + clc.aviVideoFrameRemainder;
-	
-				CL_TakeVideoFrame( );
-	
-				msec = (int)frameDuration;
-				clc.aviVideoFrameRemainder = frameDuration - msec;
+			frameRateDivider = (double)cl_aviFrameRateDivider->integer;
+			if (frameRateDivider < 1.0) {
+				frameRateDivider = 1.0;
 			}
+
+			CL_TakeVideoFrame(&afdMain);
+
+			// fixed time for next frame
+			blurFrames = Cvar_VariableIntegerValue("mme_blurFrames");
+			if (blurFrames > 1) {
+				blurFramesFactor = 1.0 / (double)blurFrames;
+			}
+			f = (((double)1000.0f / ((double)cl_aviFrameRate->value * frameRateDivider)) * (double)com_timescale->value) * blurFramesFactor;
+			//msec = (int)ceil(f);
+			msec = (int)floor(f);
+			//overf += ceil(f) - f;
+			Overf += f - floor(f);
+			if (Overf > 1.0) {
+				//msec -= (int)floor(overf);
+				//overf -= floor(overf);
+				msec += (int)floor(Overf);
+				Overf -= floor(Overf);
+			}
+			if (msec == 0) {
+				//Com_Printf("msec too small\n");
+				//msec = 1;
+			}
+			//Com_Printf("video msec: %lf %d  overf: %f\n", f, msec, overf);
 		}
 	}
 
@@ -3868,53 +3888,153 @@ video
 video [filename]
 ===============
 */
+//void CL_Video_f( void )
+//{
+//	char  filename[ MAX_OSPATH ];
+//	int   i, last;
+//
+//	if( !clc.demoplaying )
+//	{
+//		Com_Printf( "The video command can only be used when playing back demos\n" );
+//		return;
+//	}
+//
+//	if( Cmd_Argc( ) == 2 )
+//	{
+//		// explicit filename
+//		Com_sprintf( filename, MAX_OSPATH, "videos/%s.avi", Cmd_Argv( 1 ) );
+//	}
+//	else
+//	{
+//		// scan for a free filename
+//		for( i = 0; i <= 9999; i++ )
+//		{
+//			int a, b, c, d;
+//
+//			last = i;
+//
+//			a = last / 1000;
+//			last -= a * 1000;
+//			b = last / 100;
+//			last -= b * 100;
+//			c = last / 10;
+//			last -= c * 10;
+//			d = last;
+//
+//			Com_sprintf( filename, MAX_OSPATH, "videos/video%d%d%d%d.avi", a, b, c, d );
+//
+//			if( !FS_FileExists( filename ) )
+//			break; // file doesn't exist
+//		}
+//
+//		if( i > 9999 )
+//		{
+//			Com_Printf( S_COLOR_RED "ERROR: no free file names to create video\n" );
+//			return;
+//		}
+//	}
+//
+//	CL_OpenAVIForWriting( filename );
+//}
+
+extern int s_soundtime;
+
+/*
+===============
+CL_Video_f
+
+video
+video [filename]
+===============
+*/
 void CL_Video_f( void )
 {
-	char  filename[ MAX_OSPATH ];
-	int   i, last;
+  char  filename[ MAX_OSPATH ];
+  int   i;  //, last;
+  qboolean avi;
+  qboolean wav;
+  qboolean tga;
+  qboolean jpg;
+  qboolean png;
+  qboolean noSoundAvi;
 
-	if( !clc.demoplaying )
-	{
-		Com_Printf( "The video command can only be used when playing back demos\n" );
-		return;
-	}
+  if (!clc.demoplaying) {  //  ||  clc.state == CA_CONNECTING) {
+	  Com_Printf( "^1The video command can only be used when playing back demos\n" );
+	  return;
+  }
 
-	if( Cmd_Argc( ) == 2 )
-	{
-		// explicit filename
-		Com_sprintf( filename, MAX_OSPATH, "videos/%s.avi", Cmd_Argv( 1 ) );
-	}
-	else
-	{
-		// scan for a free filename
-		for( i = 0; i <= 9999; i++ )
-		{
-			int a, b, c, d;
+  avi = qfalse;
+  wav = qfalse;
+  tga = qfalse;
+  jpg = qfalse;
+  png = qfalse;
+  noSoundAvi = qfalse;
+  filename[0] = '\0';
 
-			last = i;
+  for (i = 1;  i < Cmd_Argc();  i++) {
+	  if (!Q_stricmp(Cmd_Argv(i), "avi")) {
+		  avi = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "avins")) {
+		  noSoundAvi = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "wav")) {
+		  wav = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "tga")) {
+		  tga = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "jpg")) {
+		  jpg = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "jpeg")) {
+		  jpg = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "png")) {
+		  png = qtrue;
+	  } else if (!Q_stricmp(Cmd_Argv(i), "name")) {
+		  if (!Q_stricmp(Cmd_Argv(i + 1), ":demoname")) {
+			  char dnameBuffer[MAX_OSPATH];
 
-			a = last / 1000;
-			last -= a * 1000;
-			b = last / 100;
-			last -= b * 100;
-			c = last / 10;
-			last -= c * 10;
-			d = last;
+			  COM_StripExtension(Cvar_VariableString("cl_demoFileBaseName"), dnameBuffer, MAX_OSPATH);
+			  Q_strncpyz(filename, dnameBuffer, MAX_OSPATH);
+		  } else {
+			  Q_strncpyz(filename, Cmd_Argv(i + 1), MAX_OSPATH);
+		  }
+		  i++;
+	  }
+  }
 
-			Com_sprintf( filename, MAX_OSPATH, "videos/video%d%d%d%d.avi", a, b, c, d );
+  if (!avi  &&  !tga  &&  !jpg  &&  !png) {
+	  avi = qtrue;
+  }
 
-			if( !FS_FileExists( filename ) )
-			break; // file doesn't exist
-		}
+  if (avi  &&  (tga | jpg | png)) {
+	  Com_Printf("^1can't record video and screenshots at the same time\n");
+	  return;
+  }
 
-		if( i > 9999 )
-		{
-			Com_Printf( S_COLOR_RED "ERROR: no free file names to create video\n" );
-			return;
-		}
-	}
+#if 0
+  if (Cmd_Argc() < 2) {
+	  avi = qtrue;
+  }
+#endif
 
-	CL_OpenAVIForWriting( filename );
+  if (avi  ||  wav) {
+	  if (!Q_stricmp(s_backend->string, "OpenAL")) {
+		  Com_Printf("^1can't record sound using OpenAL\n");
+		  return;
+	  }
+	  if (dma.samplebits != 16) {
+		  Com_Printf("^1can't record sound if audio sample bits not equal to 16 (see s_sdlBits)\n");
+		  return;
+	  }
+	  if (dma.channels != 2) {
+		  Com_Printf("^1can't record sound if audio channels not equal to 2 (see s_sdlChannels)\n");
+		  return;
+	  }
+  }
+
+  //Com_Printf("^2video cl_aviFrameRate %d\n", cl_aviFrameRate->integer);
+  CL_OpenAVIForWriting(&afdMain, filename, qfalse, avi, noSoundAvi, wav, tga, jpg, png, qfalse, qfalse, qfalse);
+
+  if (CL_VideoRecording(&afdMain)) {
+	  s_soundtime = s_paintedtime;
+  }
 }
 
 /*
