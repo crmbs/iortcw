@@ -36,6 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "snd_public.h"
 #include "../cgame/cg_public.h"
 #include "../game/bg_public.h"
+#include "cl_avi.h"
 
 #ifdef USE_CURL
 #include "cl_curl.h"
