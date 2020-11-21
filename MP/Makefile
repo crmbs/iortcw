@@ -1700,6 +1700,7 @@ $(Q3ASM): $(Q3ASMOBJ)
 #############################################################################
 
 Q3OBJ = \
+  $(B)/client/cl_avi.o \
   $(B)/client/cl_cgame.o \
   $(B)/client/cl_cin.o \
   $(B)/client/cl_console.o \
@@ -1711,7 +1712,6 @@ Q3OBJ = \
   $(B)/client/cl_parse.o \
   $(B)/client/cl_scrn.o \
   $(B)/client/cl_ui.o \
-  $(B)/client/cl_avi.o \
   \
   $(B)/client/cm_load.o \
   $(B)/client/cm_patch.o \
