@@ -102,14 +102,12 @@ cvar_t	*cl_autoRecordDemo;
 //cvar_t  *cl_forceavidemo;
 
 cvar_t* cl_aviFrameRate;
-cvar_t* cl_aviMotionJpeg;
 cvar_t* cl_aviFrameRateDivider;
 cvar_t* cl_aviCodec;
 cvar_t* cl_aviAllowLargeFiles;
 cvar_t* cl_aviFetchMode;
 cvar_t* cl_aviExtension;
 cvar_t* cl_aviNoAudioHWOutput;
-cvar_t* cl_avidemo;
 cvar_t* cl_forceavidemo;
 cvar_t* cl_freezeDemoPauseVideoRecording;
 cvar_t* cl_freezeDemoPauseMusic;
@@ -4151,7 +4149,6 @@ void CL_Init( void ) {
 	cl_timedemoLog = Cvar_Get("cl_timedemoLog", "", CVAR_ARCHIVE);
 	cl_autoRecordDemo = Cvar_Get("cl_autoRecordDemo", "0", CVAR_ARCHIVE);
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "50", CVAR_ARCHIVE);
-	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE);
 	cl_aviFrameRateDivider = Cvar_Get("cl_aviFrameRateDivider", "1", CVAR_ARCHIVE);
 	cl_aviCodec = Cvar_Get("cl_aviCodec", "uncompressed", CVAR_ARCHIVE);
 	cl_aviAllowLargeFiles = Cvar_Get("cl_aviAllowLargeFiles", "1", CVAR_ARCHIVE);
@@ -4160,7 +4157,6 @@ void CL_Init( void ) {
 	cl_aviNoAudioHWOutput = Cvar_Get("cl_aviNoAudioHWOutput", "1", CVAR_ARCHIVE);
 	cl_freezeDemoPauseVideoRecording = Cvar_Get("cl_freezeDemoPauseVideoRecording", "0", CVAR_ARCHIVE);
 	cl_freezeDemoPauseMusic = Cvar_Get("cl_freezeDemoPauseMusic", "1", CVAR_ARCHIVE);
-	cl_avidemo = Cvar_Get("cl_avidemo", "0", 0);
 	cl_forceavidemo = Cvar_Get("cl_forceavidemo", "0", 0);
 
 	rconAddress = Cvar_Get( "rconAddress", "", 0 );

@@ -232,6 +232,7 @@ extern cvar_t *s_muted;
 extern cvar_t *s_doppler;
 
 extern cvar_t *s_testsound;
+extern cvar_t* cl_aviNoAudioHWOutput;
 
 qboolean S_LoadSound( sfx_t *sfx );
 
