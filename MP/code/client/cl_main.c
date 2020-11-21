@@ -211,6 +211,8 @@ char autoupdateFilename[MAX_QPATH];
 
 static int noGameRestart = qfalse;
 
+extern cvar_t* s_backend;
+
 extern void SV_BotFrame( int time );
 void CL_CheckForResend( void );
 void CL_ShowIP_f( void );
