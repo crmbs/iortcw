@@ -763,12 +763,18 @@ qboolean CL_Netchan_Process( netchan_t *chan, msg_t *msg );
 //
 // cl_avi.c
 //
-qboolean CL_OpenAVIForWriting( const char *filename );
-void CL_TakeVideoFrame( void );
-void CL_WriteAVIVideoFrame( const byte *imageBuffer, int size );
-void CL_WriteAVIAudioFrame( const byte *pcmBuffer, int size );
-qboolean CL_CloseAVI( void );
-qboolean CL_VideoRecording( void );
+//qboolean CL_OpenAVIForWriting( const char *filename );
+//void CL_TakeVideoFrame( void );
+//void CL_WriteAVIVideoFrame( const byte *imageBuffer, int size );
+//void CL_WriteAVIAudioFrame( const byte *pcmBuffer, int size );
+//qboolean CL_CloseAVI( void );
+//qboolean CL_VideoRecording( void );
+
+qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* filename, qboolean us, qboolean avi, qboolean noSoundAvi, qboolean wav, qboolean tga, qboolean jpg, qboolean png);
+void CL_TakeVideoFrame(aviFileData_t* afd);
+void CL_WriteAVIVideoFrame(aviFileData_t* afd, const byte* imageBuffer, int size);
+void CL_WriteAVIAudioFrame(aviFileData_t* afd, const byte* pcmBuffer, int size);
+qboolean CL_CloseAVI(aviFileData_t* afd, qboolean us);
 
 //
 // cl_main.c
