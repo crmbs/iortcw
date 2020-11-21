@@ -1308,7 +1308,7 @@ CL_ShutdownAll
 */
 void CL_ShutdownAll(qboolean shutdownRef)
 {
-	if(CL_VideoRecording())
+	if(CL_VideoRecording(&afdMain))
 		CL_CloseAVI(&afdMain, qfalse);
 
 	if(clc.demorecording)
@@ -1584,7 +1584,7 @@ void CL_Disconnect( qboolean showMainMenu ) {
 #endif
 
 	// Stop recording any video
-	if( CL_VideoRecording( ) ) {
+	if(CL_VideoRecording(&afdMain)) {
 		// Finish rendering current frame
 		SCR_UpdateScreen( );
 		CL_CloseAVI(&afdMain, qfalse);
@@ -2030,7 +2030,7 @@ void CL_Vid_Restart_f( void ) {
 	Cvar_Set( "com_expectedhunkusage", "-1" );
 
 	// Settings may have changed so stop recording now
-	if( CL_VideoRecording( ) ) {
+	if(CL_VideoRecording(&afdMain)) {
 		CL_CloseAVI(&afdMain, qfalse);
 	}
 
