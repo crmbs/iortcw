@@ -1309,7 +1309,7 @@ CL_ShutdownAll
 void CL_ShutdownAll(qboolean shutdownRef)
 {
 	if(CL_VideoRecording())
-		CL_CloseAVI();
+		CL_CloseAVI(&afdMain, qfalse);
 
 	if(clc.demorecording)
 		CL_StopRecord_f();
@@ -1587,7 +1587,7 @@ void CL_Disconnect( qboolean showMainMenu ) {
 	if( CL_VideoRecording( ) ) {
 		// Finish rendering current frame
 		SCR_UpdateScreen( );
-		CL_CloseAVI( );
+		CL_CloseAVI(&afdMain, qfalse);
 	}
 
 	CL_UpdateGUID( NULL, 0 );
@@ -2031,7 +2031,7 @@ void CL_Vid_Restart_f( void ) {
 
 	// Settings may have changed so stop recording now
 	if( CL_VideoRecording( ) ) {
-		CL_CloseAVI( );
+		CL_CloseAVI(&afdMain, qfalse);
 	}
 
 	if(clc.demorecording)
