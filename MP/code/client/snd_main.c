@@ -287,6 +287,10 @@ void S_Update( void )
 			s_muted->modified = qtrue;
 		}
 	}
+
+	if (CL_VideoRecording(&afdMain) && (cl_freezeDemoPauseVideoRecording->integer && cl_freezeDemo->integer)) {
+		return;
+	}
 	
 	if( si.Update ) {
 		si.Update( );
