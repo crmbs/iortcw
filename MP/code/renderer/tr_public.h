@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #define __TR_PUBLIC_H
 
 #include "tr_types.h"
+#include "../client/cl_avi.h"
 
 #define REF_API_VERSION     8
 
