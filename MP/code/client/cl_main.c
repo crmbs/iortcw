@@ -3195,7 +3195,7 @@ void CL_Frame( int msec ) {
 	}
 
 	// if recording an avi, lock to a fixed fps
-	if ( ( CL_VideoRecording( ) && cl_aviFrameRate->integer && msec ) || ( cl_avidemo->integer && msec ) ) {
+	if ((CL_VideoRecording(&afdMain) && cl_aviFrameRate->integer && msec) && !(cl_freezeDemoPauseVideoRecording->integer && cl_freezeDemo->integer)) {
 		// save the current screen
 		if (clc.state == CA_ACTIVE || cl_forceavidemo->integer) {
 			int blurFrames;
