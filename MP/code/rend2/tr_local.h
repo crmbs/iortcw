@@ -2667,6 +2667,12 @@ typedef struct {
 	byte					*captureBuffer;
 	byte					*encodeBuffer;
 	qboolean			motionJpeg;
+	qboolean avi;
+	qboolean tga;
+	qboolean jpg;
+	qboolean png;
+	int picCount;
+	char givenFileName[MAX_QPATH];
 } videoFrameCommand_t;
 
 typedef struct
