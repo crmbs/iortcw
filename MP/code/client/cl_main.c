@@ -4046,7 +4046,7 @@ CL_StopVideo_f
 */
 void CL_StopVideo_f( void )
 {
-	CL_CloseAVI( );
+	CL_CloseAVI(&afdMain, qfalse);
 }
 
 /*
