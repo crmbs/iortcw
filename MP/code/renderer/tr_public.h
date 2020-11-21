@@ -114,7 +114,7 @@ typedef struct {
 
 	qboolean ( *GetEntityToken )( char *buffer, int size );
 
-	void (*TakeVideoFrame)( int h, int w, byte* captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
+	void (*TakeVideoFrame)(aviFileData_t* afd, int h, int w, byte* captureBuffer, byte* encodeBuffer, qboolean motionJpeg, qboolean avi, qboolean tga, qboolean jpg, qboolean png, int picCount, char* givenFileName);
 } refexport_t;
 
 //

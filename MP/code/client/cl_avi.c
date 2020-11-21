@@ -496,7 +496,7 @@ static void CL_CreateAVIHeader(aviFileData_t* afd)
                     WRITE_STRING("INFO");
                     START_CHUNK(afd, "ISFT"); {
                         //WRITE_STRING("Software");
-                        WRITE_STRING(va("wolfcamql version %s", WOLFCAM_VERSION));
+                        WRITE_STRING(va("iortcw version %s", IORTCW_VERSION));
                     }
                     END_CHUNK(afd);
                 }
