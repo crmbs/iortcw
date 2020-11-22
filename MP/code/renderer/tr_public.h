@@ -211,6 +211,8 @@ typedef struct {
 	qboolean (*Sys_LowPhysicalMemory)( void );
 
 	aviFileData_t* afdMain;
+
+	qboolean sse2_supported;
 } refimport_t;
 
 
