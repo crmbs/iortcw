@@ -158,6 +158,7 @@ typedef struct {
 	void	(*Cvar_CheckRange)( cvar_t *cv, float minVal, float maxVal, qboolean shouldBeIntegral );
 
 	int		(*Cvar_VariableIntegerValue) (const char *var_name);
+	void	(*Cvar_VariableStringBuffer) (const char* var_name, char* buffer, int bufsize);
 
 	void ( *Cmd_AddCommand )( const char *name, void( *cmd ) ( void ) );
 	void ( *Cmd_RemoveCommand )( const char *name );
