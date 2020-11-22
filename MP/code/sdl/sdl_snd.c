@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../qcommon/q_shared.h"
 #include "../client/snd_local.h"
 #include "../client/client.h"
+#include "../client/cl_avi.h"
 
 qboolean snd_inited = qfalse;
 
@@ -44,6 +45,10 @@ cvar_t *s_sdlMixSamps;
 /* The audio callback. All the magic happens here. */
 static int dmapos = 0;
 static int dmasize = 0;
+
+//extern qboolean CL_VideoRecording (void);
+extern cvar_t* cl_freezeDemo;
+extern cvar_t* cl_freezeDemoPauseVideoRecording;
 
 static SDL_AudioDeviceID sdlPlaybackDevice;
 

@@ -3142,6 +3142,10 @@ int Com_TimeVal(int minMsec)
 	return timeVal;
 }
 
+#ifndef DEDICATED
+#include "../client/cl_avi.h"
+#endif
+
 /*
 =================
 Com_Frame

@@ -29,6 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 // tr_init.c -- functions that are not called every frame
 
 #include "tr_local.h"
+#include "../client/cl_avi.h"
 
 glconfig_t  glConfig;
 qboolean    textureFilterAnisotropic = qfalse;
