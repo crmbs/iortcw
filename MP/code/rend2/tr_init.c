@@ -251,6 +251,9 @@ cvar_t	*r_marksOnTriangleMeshes;
 cvar_t	*r_aviMotionJpegQuality;
 cvar_t	*r_screenshotJpegQuality;
 
+cvar_t* r_jpegCompressionQuality;
+cvar_t* r_pngZlibCompression;
+
 // Ridah
 cvar_t  *r_compressModels;
 cvar_t  *r_exportCompressedModels;
@@ -1329,7 +1332,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 				convert_rgba_to_rgb(buffer, width, height);
 			}
 
-			RE_SaveJPG(finalName, r_jpegCompressionQuality->integer, width, height, buffer, 0);
+			RE_SaveJPG(finalName, r_screenshotJpegQuality->integer, width, height, buffer, 0);
 		}
 		else {  // png
 			if (!fetchBufferHasRGB) {
@@ -1352,7 +1355,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			convert_rgba_to_rgb(fetchBuffer + 18, cmd->width, cmd->height);
 		}
 
-		frameSize = RE_SaveJPGToBuffer(cmd->encodeBuffer + 18, /*FIXME*/ cmd->width * cmd->height * 3, r_jpegCompressionQuality->integer, cmd->width, cmd->height, fetchBuffer + 18, 0);
+		frameSize = RE_SaveJPGToBuffer(cmd->encodeBuffer + 18, /*FIXME*/ cmd->width * cmd->height * 3, r_screenshotJpegQuality->integer, cmd->width, cmd->height, fetchBuffer + 18, 0);
 		ri.CL_WriteAVIVideoFrame(ri.afdMain, cmd->encodeBuffer + 18, frameSize);
 	}
 	else if (cmd->avi) {
@@ -1900,6 +1903,7 @@ void R_Register( void ) {
 
 	r_aviMotionJpegQuality = ri.Cvar_Get("r_aviMotionJpegQuality", "90", CVAR_ARCHIVE);
 	r_screenshotJpegQuality = ri.Cvar_Get("r_screenshotJpegQuality", "90", CVAR_ARCHIVE);
+	r_pngZlibCompression = ri.Cvar_Get("r_pngZlibCompression", "1", CVAR_ARCHIVE);
 
 	r_maxpolys = ri.Cvar_Get( "r_maxpolys", va( "%d", MAX_POLYS ), 0 );
 	r_maxpolyverts = ri.Cvar_Get( "r_maxpolyverts", va( "%d", MAX_POLYVERTS ), 0 );
