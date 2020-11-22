@@ -1913,6 +1913,9 @@ Q3ROBJ = \
   $(B)/renderer/tr_main.o \
   $(B)/renderer/tr_marks.o \
   $(B)/renderer/tr_mesh.o \
+  $(B)/renderer/tr_mme.o \
+  $(B)/renderer/tr_mme_common.o \
+  $(B)/renderer/tr_mme_sse2.o \
   $(B)/renderer/tr_model.o \
   $(B)/renderer/tr_model_iqm.o \
   $(B)/renderer/tr_noise.o \
