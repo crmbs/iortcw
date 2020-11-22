@@ -33,8 +33,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "../qcommon/q_shared.h"
 #include "../qcommon/qfiles.h"
 #include "../qcommon/qcommon.h"
-#include "tr_public.h"
 #include "../client/cl_avi.h"
+#include "tr_public.h"
+#include "tr_mme.h"
 #include "qgl.h"
 #include "iqm.h"
 
