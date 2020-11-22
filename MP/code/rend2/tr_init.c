@@ -1005,7 +1005,7 @@ const void *RB_TakeVideoFrameCmd( const void *data )
 		memcount = RE_SaveJPGToBuffer(cmd->encodeBuffer, linelen * cmd->height,
 			r_aviMotionJpegQuality->integer,
 			cmd->width, cmd->height, cBuf, padlen);
-		ri.CL_WriteAVIVideoFrame(cmd->encodeBuffer, memcount);
+		ri.CL_WriteAVIVideoFrame(ri.afdMain, cmd->encodeBuffer, memcount);
 	}
 	else
 	{
