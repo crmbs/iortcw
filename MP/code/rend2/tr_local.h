@@ -1796,6 +1796,9 @@ typedef struct {
 
 	// RF, temp var used while parsing shader only
 	int allowCompress;
+	
+	qboolean recordingVideo;
+	int drawSurfsCount;
 
 } trGlobals_t;
 
