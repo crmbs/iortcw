@@ -1402,72 +1402,392 @@ RB_ExecuteRenderCommands
 
 ====================
 */
-void RB_ExecuteRenderCommands( const void *data ) {
-	int t1, t2;
+//void RB_ExecuteRenderCommands( const void *data ) {
+//	int t1, t2;
+//
+//	t1 = ri.Milliseconds();
+//
+//	while ( 1 ) {
+//		data = PADP(data, sizeof(void *));
+//
+//		switch ( *(const int *)data ) {
+//		case RC_SET_COLOR:
+//			data = RB_SetColor( data );
+//			break;
+//		case RC_STRETCH_PIC:
+//#ifdef USE_BLOOM
+//			//Check if it's time for BLOOM!
+//			R_BloomScreen();
+//#endif
+//			data = RB_StretchPic( data );
+//			break;
+//		case RC_ROTATED_PIC:
+//#ifdef USE_BLOOM
+//			//Check if it's time for BLOOM!
+//			R_BloomScreen();
+//#endif
+//			data = RB_RotatedPic( data );
+//			break;
+//		case RC_STRETCH_PIC_GRADIENT:
+//#ifdef USE_BLOOM
+//			//Check if it's time for BLOOM!
+//			R_BloomScreen();
+//#endif
+//			data = RB_StretchPicGradient( data );
+//			break;
+//		case RC_DRAW_SURFS:
+//			data = RB_DrawSurfs( data );
+//			break;
+//		case RC_DRAW_BUFFER:
+//			data = RB_DrawBuffer( data );
+//			break;
+//		case RC_SWAP_BUFFERS:
+//#ifdef USE_BLOOM
+//			//Check if it's time for BLOOM!
+//			R_BloomScreen();
+//#endif
+//			data = RB_SwapBuffers( data );
+//			break;
+//		case RC_SCREENSHOT:
+//			data = RB_TakeScreenshotCmd( data );
+//			break;
+//		case RC_VIDEOFRAME:
+//			data = RB_TakeVideoFrameCmd(data, &shotDataMain);
+//			break;
+//		case RC_COLORMASK:
+//			data = RB_ColorMask(data);
+//			break;
+//		case RC_CLEARDEPTH:
+//			data = RB_ClearDepth(data);
+//			break;
+//		case RC_END_OF_LIST:
+//		default:
+//			// stop rendering
+//			t2 = ri.Milliseconds();
+//			backEnd.pc.msec = t2 - t1;
+//			return;
+//		}
+//	}
+//
+//}
+void RB_ExecuteRenderCommands(const void* data) {
+	int		t1, t2;
+	const void* dataOrig;
+	const colorMaskCommand_t* cmd;
+	qboolean colorMaskSet;
+	GLboolean rgba[4];
+	qboolean videoCommand;
+	const void* data2;
 
-	t1 = ri.Milliseconds();
+	// silence compiler warning
+	rgba[0] = rgba[1] = rgba[2] = rgba[3] = GL_FALSE;
 
-	while ( 1 ) {
-		data = PADP(data, sizeof(void *));
+	//FIXME splitting rendering between world and hud will not work correctly when R_IssuePendingRenderCommands() is used  -- 2018-08-10 hack added to only run R_IssuePendingRenderCommands() at the end of frame
 
-		switch ( *(const int *)data ) {
-		case RC_SET_COLOR:
-			data = RB_SetColor( data );
-			break;
-		case RC_STRETCH_PIC:
-#ifdef USE_BLOOM
-			//Check if it's time for BLOOM!
-			R_BloomScreen();
-#endif
-			data = RB_StretchPic( data );
-			break;
-		case RC_ROTATED_PIC:
-#ifdef USE_BLOOM
-			//Check if it's time for BLOOM!
-			R_BloomScreen();
-#endif
-			data = RB_RotatedPic( data );
-			break;
-		case RC_STRETCH_PIC_GRADIENT:
-#ifdef USE_BLOOM
-			//Check if it's time for BLOOM!
-			R_BloomScreen();
-#endif
-			data = RB_StretchPicGradient( data );
-			break;
-		case RC_DRAW_SURFS:
-			data = RB_DrawSurfs( data );
-			break;
-		case RC_DRAW_BUFFER:
-			data = RB_DrawBuffer( data );
-			break;
-		case RC_SWAP_BUFFERS:
-#ifdef USE_BLOOM
-			//Check if it's time for BLOOM!
-			R_BloomScreen();
-#endif
-			data = RB_SwapBuffers( data );
-			break;
-		case RC_SCREENSHOT:
-			data = RB_TakeScreenshotCmd( data );
-			break;
+	if (tr.recordingVideo) {
+		R_MME_CheckCvars(qfalse, &shotDataMain);
+	}
+
+	t1 = ri.RealMilliseconds();
+	dataOrig = data;
+
+	videoCommand = qfalse;
+	data = dataOrig;
+	while (1) {
+		data = PADP(data, sizeof(void*));
+		switch (*(const int*)data) {
 		case RC_VIDEOFRAME:
-			data = RB_TakeVideoFrameCmd(data, &shotDataMain);
-			break;
-		case RC_COLORMASK:
-			data = RB_ColorMask(data);
-			break;
-		case RC_CLEARDEPTH:
-			data = RB_ClearDepth(data);
+			videoCommand = qtrue;
+			data = RB_SkipRenderCommand(data);
 			break;
 		case RC_END_OF_LIST:
+			goto videoCommandCheckDone;
 		default:
-			// stop rendering
-			t2 = ri.Milliseconds();
-			backEnd.pc.msec = t2 - t1;
-			return;
+			data = RB_SkipRenderCommand(data);
+			break;
 		}
 	}
 
+videoCommandCheckDone:
+
+	colorMaskSet = qfalse;
+	tr.drawSurfsCount = 0;
+
+	data = dataOrig;
+	dprintf("render1 commands start ----------------------------\n");
+	while (1) {
+		data = PADP(data, sizeof(void*));
+		switch (*(const int*)data) {
+		case RC_DRAW_SURFS:
+			dprintf("r1 drawsurfs\n");
+			data = RB_DrawSurfs(data);  //FIXME others are hud? you sure?
+			tr.drawSurfsCount++;
+			break;
+
+		case RC_CLEARDEPTH:
+			dprintf("r1 cleardepth\n");
+			data = RB_ClearDepth(data);
+			break;
+
+		case RC_DRAW_BUFFER:
+			dprintf("r1 drawbuffer\n");
+			data = RB_DrawBuffer(data);
+			if (r_anaglyphMode->integer) {
+				qglClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+				qglColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+				qglClear(GL_COLOR_BUFFER_BIT);
+			}
+			//data = RB_SkipRenderCommand(data);
+			break;
+
+		case RC_SWAP_BUFFERS:
+			//dprintf("r1 swapbuffers\n");
+			//data = RB_SwapBuffers(data, qtrue);
+			data = RB_SkipRenderCommand(data);
+			break;
+
+		case RC_COLORMASK:
+			cmd = data;
+			dprintf("r1 colormask %d %d %d %d\n", cmd->rgba[0], cmd->rgba[1], cmd->rgba[2], cmd->rgba[3]);
+			rgba[0] = cmd->rgba[0];
+			rgba[1] = cmd->rgba[1];
+			rgba[2] = cmd->rgba[2];
+			rgba[3] = cmd->rgba[3];
+			//ri.Printf(PRINT_ALL, "mask %d %d %d %d\n", rgba[0], rgba[1], rgba[2], rgba[3]);
+			data = RB_ColorMask(data);
+			colorMaskSet = qtrue;
+			break;
+
+		case RC_BEGIN_HUD:
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_DEBUG_GRAPHICS:
+			data = RB_DebugGraphics(data);
+			break;
+		case RC_END_OF_LIST:
+			goto firstpassdone;
+		default:
+			data = RB_SkipRenderCommand(data);
+			break;
+		}
+	}
+
+firstpassdone:
+
+	if (colorMaskSet) {
+		qglColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	}
+
+	/* Take and merge DOF frames */
+	if ((tr.recordingVideo) && tr.drawSurfsCount) {
+		if (R_MME_MultiPassNext(qtrue)) {
+			R_InitNextFrameNoCommands();
+			goto videoCommandCheckDone;
+		}
+	}
+
+	// video command is in it's own render list, so drawing doesn't always
+	// take place
+
+	if (tr.drawSurfsCount) {
+		// screen map texture
+		if (tr.needScreenMap) {
+			float x, y, w, h;
+			int currentTexEnv;
+
+			RB_SetGL2D();
+
+			GL_SelectTextureUnit(0);
+			currentTexEnv = glState.texEnv[glState.currenttmu];
+
+			GL_TexEnv(GL_REPLACE);
+
+			GL_State(GLS_DEPTHTEST_DISABLE);
+			qglDepthMask(GL_FALSE);
+
+			// get original area that is going to be overwritten
+			qglViewport(0, 0, glConfig.vidWidth, glConfig.vidHeight);
+			qglBindTexture(GL_TEXTURE_2D, tr.screenMapImageScratchBuffer->texnum);
+			qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, tr.screenMapImageScratchBuffer->uploadWidth, tr.screenMapImageScratchBuffer->uploadHeight);
+
+			// get big screen image, note: it might clip parts since the texture might not be as big as the screen
+			qglBindTexture(GL_TEXTURE_2D, tr.screenMapFullImage->texnum);
+			// this will be a flipped image, but it is flipped again by the other call to qlCopyTexSubImage2D()
+			qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, tr.screenMapFullImage->uploadWidth, tr.screenMapFullImage->uploadHeight);
+
+			// draw scaled down version
+			x = 0;
+			y = 0;
+			w = tr.screenMapFullImage->uploadWidth;
+			h = tr.screenMapFullImage->uploadHeight;
+
+			qglViewport(0, 0, tr.screenMapImage->uploadWidth, tr.screenMapImage->uploadHeight);
+			qglBegin(GL_QUADS);
+
+			qglTexCoord2f(0, 0);
+			qglVertex2f(x, y);
+
+			qglTexCoord2f(1, 0);
+			qglVertex2f(x + w, y);
+
+			qglTexCoord2f(1, 1);
+			qglVertex2f(x + w, y + h);
+
+			qglTexCoord2f(0, 1);
+			qglVertex2f(x, y + h);
+
+			qglEnd();
+
+			// get scaled version
+			qglBindTexture(GL_TEXTURE_2D, tr.screenMapImage->texnum);
+			// flipped back
+
+			qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, tr.screenMapImage->uploadWidth, tr.screenMapImage->uploadHeight);
+
+			// restore original image
+			qglViewport(0, 0, glConfig.vidWidth, glConfig.vidHeight);
+
+			qglBindTexture(GL_TEXTURE_2D, tr.screenMapImageScratchBuffer->texnum);
+			qglBegin(GL_QUADS);
+
+			x = 0;
+			y = glConfig.vidHeight - tr.screenMapImageScratchBuffer->uploadHeight;
+			w = tr.screenMapImageScratchBuffer->uploadWidth;
+			h = tr.screenMapImageScratchBuffer->uploadHeight;
+
+			// render a flipped image
+			qglTexCoord2f(0, 0);
+			qglVertex2f(x, y + h);
+
+			qglTexCoord2f(1, 0);
+			qglVertex2f(x + w, y + h);
+
+			qglTexCoord2f(1, 1);
+			qglVertex2f(x + w, y);
+
+			qglTexCoord2f(0, 1);
+			qglVertex2f(x, y);
+
+			qglEnd();
+
+			//qglViewport(0, 0, glConfig.vidWidth, glConfig.vidHeight);
+
+			GL_TexEnv(currentTexEnv);
+			qglBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		RB_QLPostProcessing();		
+	}
+
+	if (colorMaskSet && r_anaglyph2d->integer) {
+		qglColorMask(rgba[0], rgba[1], rgba[2], rgba[3]);
+	}
+
+	data = dataOrig;
+	dprintf("render2 commands start ------------------------------\n");
+	while (1) {
+		data = PADP(data, sizeof(void*));
+		switch (*(const int*)data) {
+		case RC_BEGIN_HUD:
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_SET_COLOR:
+			//dprintf("r2 setcolor\n");
+			data = RB_SetColor(data);
+			break;
+		case RC_STRETCH_PIC:
+			//dprintf("r2 stretchpic\n");
+			data = RB_StretchPic(data);
+			//data = RB_SkipRenderCommand(data);
+			break;
+		case RC_DRAW_SURFS:
+			//dprintf("r2 drawsurfs\n");
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_DRAW_BUFFER:
+			//dprintf("r2 drawbuffer\n");
+			//data = RB_DrawBuffer( data );
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_SWAP_BUFFERS:
+			dprintf("r2 swapbuffers\n");
+			data = RB_SwapBuffers(data, qtrue);
+			//data = RB_SkipRenderCommand(data);
+			break;
+		case RC_SCREENSHOT:
+			//dprintf("r2 takescreenshot\n");
+			//data = RB_TakeScreenshotCmd( data );
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_VIDEOFRAME:
+			//dprintf("r2 takevideoframe\n");
+			//data = RB_TakeVideoFrameCmd( data );
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_COLORMASK:
+			//dprintf("r2 colormask\n");
+			//data = RB_ColorMask(data);
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_CLEARDEPTH:
+			//dprintf("r2 cleardepth\n");
+			//data = RB_ClearDepth(data);
+			data = RB_SkipRenderCommand(data);
+			break;
+		case RC_DEBUG_GRAPHICS:
+			data = RB_SkipRenderCommand(data);
+			break;
+
+		case RC_END_OF_LIST:
+			//dprintf("render2 commands stop ------------------------\n");
+			// stop rendering
+			//t2 = ri.RealMilliseconds();
+			//backEnd.pc.msec = t2 - t1;
+			goto secondpassdone;
+		default:
+			ri.Printf(PRINT_ALL, "^1RB_ExecuteRenderCommands():  unknown render command: %d\n", *(const int*)data);
+			data = RB_SkipRenderCommand(data);
+			break;
+		}
+	}
+
+secondpassdone:
+
+	data = dataOrig;
+	dprintf("render3 commands start -------------------------\n");
+	while (1) {
+		data = PADP(data, sizeof(void*));
+		switch (*(const int*)data) {
+		case RC_SCREENSHOT:
+			dprintf("r3 takescreenshot\n");
+			data = RB_TakeScreenshotCmd(data);
+			break;
+		case RC_VIDEOFRAME:
+			dprintf("r3 takevideoframe\n");
+			data = RB_TakeVideoFrameCmd(data, &shotDataMain);
+			break;
+		case RC_END_OF_LIST:
+			t2 = ri.RealMilliseconds();
+			backEnd.pc.msec = t2 - t1;
+			goto thirdpassdone;
+		default:
+			data = RB_SkipRenderCommand(data);
+			break;
+		}
+	}
+
+thirdpassdone:
+
+#if 0
+	if (tr.usingMultiSample) {
+		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, tr.frameBufferMultiSample);
+	}
+	else {
+		qglBindFramebufferEXT(GL_FRAMEBUFFER_EXT, tr.frameBuffer);
+	}
+#endif
+
+	//ri.Printf(PRINT_ALL, "done.\n");
+	return;
 }
 
