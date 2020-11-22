@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef tr_mme_h_included
 #define tr_mme_h_included
 
-#include "tr_common.h"
+#include "tr_local.h"
 #include <xmmintrin.h>
 
 #define BLURMAX 256
