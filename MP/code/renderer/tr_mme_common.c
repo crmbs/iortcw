@@ -1,3 +1,4 @@
+#include "tr_local.h"
 #include "tr_mme.h"
 
 // qglReadPixels
