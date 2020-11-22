@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "tr_local.h"
 
 #include "../qcommon/puff.h"
-#include "../zlib/zlib.h"
+#include "../zlib-1.2.11/zlib.h"
 
 extern cvar_t *r_pngZlibCompression;
 
