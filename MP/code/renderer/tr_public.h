@@ -131,6 +131,9 @@ typedef struct {
 	// milliseconds should only be used for profiling, never
 	// for anything game related.  Get time from the refdef
 	int ( *Milliseconds )( void );
+	// RealMilliseconds should only be used for profiling, never
+	// for anything game related.  Get time from the refdef
+	int (*RealMilliseconds)(void);
 
 	// stack based memory allocation for per-level things that
 	// won't be freed
