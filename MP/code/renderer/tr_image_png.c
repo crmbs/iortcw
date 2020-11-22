@@ -2489,7 +2489,7 @@ qboolean SavePNG(const char* name, byte* data, int width, int height, int bytede
 	byte* work;
 	fileHandle_t fp;
 	int maxsize;
-	ulong size, outcount;
+	long size, outcount;
 	struct PNG_Chunk_IHDR header;
 
 	//png_error = PNG_ERROR_OK;
