@@ -19,7 +19,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ===========================================================================
 */
 
-#include "tr_local.h"
+#include "tr_common.h"
 
 #include "../qcommon/puff.h"
 #include "../zlib-1.2.11/zlib.h"
@@ -236,7 +236,7 @@ static struct BufferedFile *ReadBufferedFile(const char *name)
 	 *  Allocate control struct.
 	 */
 
-	BF = ri.Malloc(sizeof(struct BufferedFile));
+	BF = ri.Z_Malloc(sizeof(struct BufferedFile));
 	if(!BF)
 	{
 		return(NULL);
@@ -626,7 +626,7 @@ static uint32_t DecompressIDATs(struct BufferedFile *BF, uint8_t **Buffer)
 
 	BufferedFileRewind(BF, BytesToRewind);
 
-	CompressedData = ri.Malloc(CompressedDataLength);
+	CompressedData = ri.Z_Malloc(CompressedDataLength);
 	if(!CompressedData)
 	{
 		return(-1);
@@ -728,7 +728,7 @@ static uint32_t DecompressIDATs(struct BufferedFile *BF, uint8_t **Buffer)
 	 *  Allocate the buffer for the uncompressed data.
 	 */
 
-	DecompressedData = ri.Malloc(puffDestLen);
+	DecompressedData = ri.Z_Malloc(puffDestLen);
 	if(!DecompressedData)
 	{
 		ri.Free(CompressedData);
@@ -2401,7 +2401,7 @@ void R_LoadPNG(const char *name, byte **pic, int *width, int *height)
 	 *  Allocate output buffer.
 	 */
 
-	OutBuffer = ri.Malloc(IHDR_Width * IHDR_Height * Q3IMAGE_BYTESPERPIXEL); 
+	OutBuffer = ri.Z_Malloc(IHDR_Width * IHDR_Height * Q3IMAGE_BYTESPERPIXEL); 
 	if(!OutBuffer)
 	{
 		ri.Free(DecompressedData); 
@@ -2782,7 +2782,7 @@ qboolean SavePNG (const char *name, byte *data, int width, int height, int byted
 
 	// Max size of compressed image (source size + 0.1% + 12)
 	maxsize = (width * height * bytedepth) + 4096;
-	work = (byte *)ri.Malloc(maxsize);
+	work = (byte *)ri.Z_Malloc(maxsize);
 
 	if (!work) {
 		ri.Printf(PRINT_ALL, "^1error: couldn't allocate buffer for png saving\n");
