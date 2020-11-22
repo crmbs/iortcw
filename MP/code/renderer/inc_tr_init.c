@@ -289,7 +289,7 @@ const void *RB_TakeVideoFrameCmd (const void *data, shotData_t *shotData)
 				convert_rgba_to_rgb(buffer, width, height);
 			}
 
-			RE_SaveJPG(finalName, r_jpegCompressionQuality->integer, width, height, buffer, 0);
+			RE_SaveJPG(finalName, r_screenshotJpegQuality->integer, width, height, buffer, 0);
 		} else {  // png
 			if (!fetchBufferHasRGB) {
 				swap_bgr(buffer, width, height, fetchBufferHasAlpha);
@@ -311,7 +311,7 @@ const void *RB_TakeVideoFrameCmd (const void *data, shotData_t *shotData)
 			convert_rgba_to_rgb(fetchBuffer + 18, cmd->width, cmd->height);
 		}
 
-		frameSize = RE_SaveJPGToBuffer(cmd->encodeBuffer + 18, /*FIXME*/ cmd->width * cmd->height * 3, r_jpegCompressionQuality->integer, cmd->width, cmd->height, fetchBuffer + 18, 0);
+		frameSize = RE_SaveJPGToBuffer(cmd->encodeBuffer + 18, /*FIXME*/ cmd->width * cmd->height * 3, r_screenshotJpegQuality->integer, cmd->width, cmd->height, fetchBuffer + 18, 0);
 		ri.CL_WriteAVIVideoFrame(ri.afdMain, cmd->encodeBuffer + 18, frameSize);
 
 	} else if (cmd->avi) {
