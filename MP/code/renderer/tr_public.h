@@ -184,6 +184,7 @@ typedef struct {
 	char ** ( *FS_ListFiles )( const char *name, const char *extension, int *numfilesfound );
 	void ( *FS_FreeFileList )( char **filelist );
 	void ( *FS_WriteFile )( const char *qpath, const void *buffer, int size );
+	int		(*FS_Write) (const void* buffer, int len, fileHandle_t f);
 	qboolean ( *FS_FileExists )( const char *file );
 	void	(*FS_FCloseFile) (fileHandle_t f);
 	fileHandle_t(*FS_FOpenFileWrite) (const char* qpath);
