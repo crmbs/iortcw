@@ -1899,6 +1899,8 @@ void RE_SaveJPG(char * filename, int quality, int image_width, int image_height,
                 unsigned char *image_buffer, int padding);
 size_t RE_SaveJPGToBuffer(byte *buffer, size_t bufSize, int quality,
 		          int image_width, int image_height, byte *image_buffer, int padding);
+qboolean SavePNG(const char* name, byte* data, int width, int height, int bytedepth);
+
 //void RE_TakeVideoFrame( int width, int height,
 //		byte *captureBuffer, byte *encodeBuffer, qboolean motionJpeg );
 
