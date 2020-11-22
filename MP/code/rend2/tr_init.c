@@ -1034,7 +1034,7 @@ const void *RB_TakeVideoFrameCmd( const void *data )
 			srcptr += padlen;
 		}
 		
-		ri.CL_WriteAVIVideoFrame(cmd->encodeBuffer, avipadwidth * cmd->height);
+		ri.CL_WriteAVIVideoFrame(ri.afdMain, cmd->encodeBuffer, avipadwidth * cmd->height);
 	}
 
 	return (const void *)(cmd + 1);	
