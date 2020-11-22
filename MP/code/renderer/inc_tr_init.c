@@ -224,12 +224,8 @@ const void *RB_TakeVideoFrameCmd (const void *data, shotData_t *shotData)
 		}
 		count /= frameRateDivider;
 
-		//FIXME hack
-		if (shotData == &shotDataLeft) {
-			Com_sprintf(finalName, MAX_QPATH, "videos/%s-left-%010d.tga", cmd->givenFileName, count);
-		} else {
-			Com_sprintf(finalName, MAX_QPATH, "videos/%s-%010d.tga", cmd->givenFileName, count);
-		}
+		Com_sprintf(finalName, MAX_QPATH, "videos/%s-%010d.tga", cmd->givenFileName, count);
+
 		width = cmd->width;
 		height = cmd->height;
 		buffer = fetchBuffer;
@@ -269,12 +265,7 @@ const void *RB_TakeVideoFrameCmd (const void *data, shotData_t *shotData)
 		}
 		count /= frameRateDivider;
 
-		//FIXME hack
-		if (shotData == &shotDataLeft) {
-			Com_sprintf(finalName, MAX_QPATH, "videos/%s-left-%010d.%s", cmd->givenFileName, count, type);
-		} else {
-			Com_sprintf(finalName, MAX_QPATH, "videos/%s-%010d.%s", cmd->givenFileName, count, type);
-		}
+		Com_sprintf(finalName, MAX_QPATH, "videos/%s-%010d.%s", cmd->givenFileName, count, type);
 
 		width = cmd->width;
 		height = cmd->height;
