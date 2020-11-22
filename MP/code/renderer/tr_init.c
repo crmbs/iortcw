@@ -1170,7 +1170,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 				swap_bgr(buffer, width, height, fetchBufferHasAlpha);
 			}
 
-			SavePNG(finalName, buffer, width, height, (3 + fetchBufferHasAlpha));
+			//SavePNG(finalName, buffer, width, height, (3 + fetchBufferHasAlpha));
 		}
 
 		goto done;

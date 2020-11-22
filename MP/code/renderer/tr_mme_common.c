@@ -154,7 +154,7 @@ void R_MME_SaveShot( mmeShot_t *shot, int width, int height, float fps, byte *in
 		outSize = SaveTGA( mme_tgaCompression->integer, width, height, shot->type, inBuf, (byte *)outBuf, outSize );
 		break;
 	case mmeShotFormatPNG:
-		outSize = SavePNG( mme_pngCompression->integer, width, height, shot->type, inBuf, (byte *)outBuf, outSize );
+		outSize = 0;// SavePNG(mme_pngCompression->integer, width, height, shot->type, inBuf, (byte*)outBuf, outSize);
 		break;
 	default:
 		outSize = 0;
