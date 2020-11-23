@@ -1819,6 +1819,7 @@ typedef struct {
 	qboolean tga;
 	qboolean jpg;
 	qboolean png;
+	qboolean saveDepth;
 	int picCount;
 	char givenFileName[MAX_QPATH];
 } videoFrameCommand_t;

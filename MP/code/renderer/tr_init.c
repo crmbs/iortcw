@@ -951,6 +951,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 	shotData->pixelCount = cmd->width * cmd->height;
 
+	Com_Printf("debug 12.1\n");
+
 	if (cmd->png) {
 		fetchBufferHasAlpha = qtrue;
 		fetchBufferHasRGB = qtrue;
