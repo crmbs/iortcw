@@ -962,12 +962,25 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		fetchBuffer -= 18;
 	}
 	else {  //  not png
+
+		Com_Printf("debug 12.2\n");
+
 		sbuf = finalName;
+
+		Com_Printf("debug 12.3\n");
+
 		ri.Cvar_VariableStringBuffer("cl_aviFetchMode", sbuf, MAX_QPATH);
+
+		Com_Printf("debug 12.4\n");
+
 		if (!Q_stricmp("gl_rgba", sbuf)) {
+
+			Com_Printf("debug 12.5\n");
+
 			fetchBufferHasAlpha = qtrue;
 			fetchBufferHasRGB = qtrue;
 			glMode = GL_RGBA;
+
 			Com_Printf("debug 13\n");
 		}
 		else if (!Q_stricmp("gl_rgb", sbuf)) {
