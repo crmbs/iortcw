@@ -1782,6 +1782,8 @@ void R_Init( void ) {
 
 	R_InitFreeType();
 
+	R_MME_Init();
+
 	err = qglGetError();
 	if ( err != GL_NO_ERROR ) {
 		ri.Printf( PRINT_ALL, "glGetError() = 0x%x\n", err );

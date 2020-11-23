@@ -1906,6 +1906,8 @@ size_t RE_SaveJPGToBuffer(byte *buffer, size_t bufSize, int quality,
 
 void RE_TakeVideoFrame(aviFileData_t* afd, int width, int height, byte* captureBuffer, byte* encodeBuffer, qboolean motionJpeg, qboolean avi, qboolean tga, qboolean jpg, qboolean png, int picCount, char* givenFileName);
 
+void R_MME_Init(void);
+
 void R_DrawElements( int numIndexes, const glIndex_t *indexes );
 void VectorArrayNormalize( vec4_t *normals, unsigned int count );
 void R_BindAnimatedImage( textureBundle_t *bundle );

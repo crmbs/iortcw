@@ -36,7 +36,6 @@ extern cvar_t *r_znear;
 void R_GammaCorrect (byte *buffer, int bufSize);
 
 shotData_t shotDataMain;
-shotData_t shotDataLeft;
 
 //Data to contain the blurring factors
 static passData_t passDataMain;
@@ -101,9 +100,6 @@ void R_MME_CheckCvars (qboolean init, shotData_t *shotData)
 	if (shotData == &shotDataMain) {
 		passControl = &passDataMain.control;
 		passData = &passDataMain;
-	} else if (shotData == &shotDataLeft) {
-		passControl = &passDataLeft.control;
-		passData = &passDataLeft;
 	} else {
 		ri.Error(ERR_DROP, "%s unknown shotData structure", __FUNCTION__);
 	}
@@ -113,7 +109,6 @@ void R_MME_CheckCvars (qboolean init, shotData_t *shotData)
 	if (mme_blurType->modified) {
 		// can't just reset the specified *shotData since mme_blurType->modfied needs to be set to qfalse at this point (to avoid looping)
 		shotDataMain.forceReset = qtrue;
-		shotDataLeft.forceReset = qtrue;
 		mme_blurType->modified = qfalse;
 
 		//FIXME use something like shotData->lastSetBlurType
@@ -207,15 +202,9 @@ qboolean R_MME_JitterOrigin( float *x, float *y, qboolean useMain ) {
 	*x = 0;
 	*y = 0;
 
-	if (useMain) {
-		passControl = &passDataMain.control;
-		shotData = &shotDataMain;
-		passData = &passDataMain;
-	} else {
-		passControl = &passDataLeft.control;
-		shotData = &shotDataLeft;
-		passData = &passDataLeft;
-	}
+	passControl = &passDataMain.control;
+	shotData = &shotDataMain;
+	passData = &passDataMain;
 
 	if ( passControl->totalFrames ) {
 		int i = passControl->totalIndex;
@@ -238,17 +227,10 @@ void R_MME_JitterView( float *pixels, float *eyes, qboolean useMain ) {
 	shotData_t *shotData;
 	passData_t *passData;
 
-	if (useMain) {
-		shotData = &shotDataMain;
-		blurControl = &shotDataMain.control;
-		passControl = &passDataMain.control;
-		passData = &passDataMain;
-	} else {
-		shotData = &shotDataLeft;
-		blurControl = &shotDataLeft.control;
-		passControl = &passDataLeft.control;
-		passData = &passDataLeft;
-	}
+	shotData = &shotDataMain;
+	blurControl = &shotDataMain.control;
+	passControl = &passDataMain.control;
+	passData = &passDataMain;
 
 	if ( blurControl->totalFrames ) {
 		int i = blurControl->totalIndex;
@@ -280,15 +262,9 @@ int R_MME_MultiPassNext (qboolean useMain)
 	__m64 *outAlign;
 	//int i;
 
-	if (useMain) {
-		control = &passDataMain.control;
-		shotData = &shotDataMain;
-		passData = &passDataMain;
-	} else {
-		control = &passDataLeft.control;
-		shotData = &shotDataLeft;
-		passData = &passDataLeft;
-	}
+	control = &passDataMain.control;
+	shotData = &shotDataMain;
+	passData = &passDataMain;
 
 	if ( !control->totalFrames )
 		return 0;
@@ -352,10 +328,9 @@ byte *R_MME_GetPassData (qboolean useMain)
 
 void R_MME_Shutdown(void) {
 	R_MME_FreeMemory(&shotDataMain);
-	R_MME_FreeMemory(&shotDataLeft);
 }
 
-void R_MME_Init(void) {
+void R_MME_Init(void) {+
 	// MME cvars
 	mme_blurFrames = ri.Cvar_Get ( "mme_blurFrames", "0", CVAR_ARCHIVE );
 	mme_blurOverlap = ri.Cvar_Get ("mme_blurOverlap", "0", CVAR_ARCHIVE );
@@ -375,13 +350,9 @@ void R_MME_Init(void) {
 	mme_saveDepth = ri.Cvar_Get ( "mme_saveDepth", "0", CVAR_ARCHIVE );
 
 	Com_Memset(&shotDataMain, 0, sizeof(shotDataMain));
-	Com_Memset(&shotDataLeft, 0, sizeof(shotDataLeft));
 
 	R_MME_CheckCvars(qtrue, &shotDataMain);
 	R_MME_InitMemory(qtrue, &shotDataMain);
-
-	R_MME_CheckCvars(qtrue, &shotDataLeft);
-	R_MME_InitMemory(qtrue, &shotDataLeft);
 
 	// avoid crash if mme_dofVisualize set when renderer starts
 	if (mme_dofVisualize->integer) {
@@ -392,10 +363,6 @@ void R_MME_Init(void) {
 	//FIXME testing
 	shotDataMain.dofFocus = 1024;
 	shotDataMain.dofRadius = 5;
-
-	//FIXME testing
-	shotDataLeft.dofFocus = 1024;
-	shotDataLeft.dofRadius = 5;
 #endif
 }
 
@@ -469,7 +436,4 @@ void RE_UpdateDof (float viewFocus, float viewRadius)
 {
 	shotDataMain.dofFocus = viewFocus;
 	shotDataMain.dofRadius = viewRadius;
-
-	shotDataLeft.dofFocus = viewFocus;
-	shotDataLeft.dofRadius = viewRadius;
 }
