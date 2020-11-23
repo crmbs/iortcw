@@ -926,6 +926,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 	qboolean useBlur;
 	int frameRateDivider;
 
+	Com_Printf("debug 11\n");
+
 	cmd = (const videoFrameCommand_t*)data;
 
 	useBlur = qfalse;
@@ -944,6 +946,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 	if (frameRateDivider < 1) {
 		frameRateDivider = 1;
 	}
+
+	Com_Printf("debug 12\n");
 
 	shotData->pixelCount = cmd->width * cmd->height;
 
@@ -997,6 +1001,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			fetchBuffer -= 18;
 		}
 	}
+
+	Com_Printf("debug 13\n");
 
 	//FIXME why is this needed?
 	if (useBlur) {
@@ -1092,6 +1098,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		}
 	}
 
+	Com_Printf("debug 14\n");
+
 	if (cmd->tga) {
 		byte* buffer;
 		int width, height;
@@ -1129,6 +1137,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 		goto done;
 	}
+
+	Com_Printf("debug 15\n");
 
 	if (cmd->jpg || cmd->png) {
 		byte* buffer;
@@ -1175,6 +1185,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 		goto done;
 	}
+
+	Com_Printf("debug 16\n");
 
 	if (cmd->avi && cmd->motionJpeg)
 	{
@@ -1230,6 +1242,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 		ri.CL_WriteAVIVideoFrame(ri.afdMain, outBuffer + 18, frameSize * 3);
 	}
+
+	Com_Printf("debug 17\n");
 
 done:
 
