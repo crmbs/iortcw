@@ -4035,7 +4035,7 @@ void CL_Video_f( void )
 	  }
   }
 
-  //Com_Printf("^2video cl_aviFrameRate %d\n", cl_aviFrameRate->integer);
+  Com_Printf("^2video cl_aviFrameRate %d\n", cl_aviFrameRate->integer);
   CL_OpenAVIForWriting(&afdMain, filename, qfalse, avi, noSoundAvi, wav, tga, jpg, png);
 
   if (CL_VideoRecording(&afdMain)) {
