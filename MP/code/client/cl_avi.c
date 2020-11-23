@@ -712,6 +712,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         afd->codec = CODEC_UNCOMPRESSED;
     }
 
+    Com_Printf("debug 1\n");
+
     if (!us && (afd->width % 4) != 0) {
         switch (afd->codec) {
         case CODEC_MJPEG:
@@ -722,6 +724,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
             break;
         }
     }
+
+    Com_Printf("debug 2\n");
 
     if (!us) {
         // 18: header info, 16: alignment spacing
@@ -735,6 +739,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         }
     }
 
+    Com_Printf("debug 3\n");
+
     afd->a.rate = dma.speed;
     afd->a.format = WAV_FORMAT_PCM;
     afd->a.channels = dma.channels;
@@ -743,6 +749,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
        !!! FIXME:  float32 samples for AVI writing. */
     afd->a.bits = dma.samplebits;
     afd->a.sampleSize = (afd->a.bits / 8) * afd->a.channels;
+
+    Com_Printf("debug 4\n");
 
 #if 0
     if (afd->a.rate % afd->frameRate)
@@ -776,6 +784,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
             "with OpenAL. Set s_useOpenAL to 0 for audio capture\n");
     }
 
+    Com_Printf("debug 5\n");
+
     if (afd->noSoundAvi) {
         afd->audio = qfalse;
     }
@@ -787,6 +797,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     else {
         afd->newRiffOrCloseFileSize = (1024 * 1024) * 950;  //950;  //(1024 * 1024) * 20;  //(1024 * 1024 * 1024);  //FIXME  base it on sample sizes subtracted from defined value
     }
+
+    Com_Printf("debug 6\n");
 
     if (!us && afd->codec == CODEC_HUFFYUV) {
         afd->AC = calloc(1, sizeof(AVCodecContext));
@@ -803,9 +815,13 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         huffyuv_encode_init(afd->AC);
     }
 
+    Com_Printf("debug 7\n");
+
     // This doesn't write a real header, but allocates the
     // correct amount of space at the beginning of the file
     CL_CreateAVIHeader(afd);
+
+    Com_Printf("debug 8\n");
 
     SafeFS_Write(buffer, bufIndex, afd->f);
     afd->riffSize = bufIndex;
@@ -820,6 +836,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     afd->fileOpen = qtrue;
 
     afd->riffCount = 1;
+
+    Com_Printf("debug 9\n");
 
     // testing
 
@@ -847,6 +865,8 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         fwriteString("data", afd->wavFile);
         fwrite4(size - 44, afd->wavFile);
     }
+
+    Com_Printf("debug 10\n");
 
     afd->recording = qtrue;
     return qtrue;
