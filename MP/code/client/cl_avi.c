@@ -591,7 +591,7 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         afd->PcmBytesInBuffer = 0;  // audio static buffer
     }
 
-    //Com_Printf("^2CL_OpenAVIForWriting(%s)\n", fileName);
+    Com_Printf("^2CL_OpenAVIForWriting(%s)\n", fileName);
 
 #ifdef _FILE_OFFSET_BITS
   //Com_Printf("file offset bits: %d\n", _FILE_OFFSET_BITS);
@@ -647,14 +647,14 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         else {
             Q_strncpyz(afd->givenFileName, fileName, MAX_QPATH);
         }
-        //Com_Printf("^3record: %s\n", afd->givenFileName);
+        Com_Printf("^3record: %s\n", afd->givenFileName);
     }
     else {
         //Q_strncpyz(afd->givenFileName, afd->fileName, MAX_QPATH);
     }
 
     Com_sprintf(afd->fileName, MAX_QPATH, "videos/%s-%04d.%s", afd->givenFileName, afd->vidFileCount, cl_aviExtension->string);
-    //Com_Printf("%s\n", afd->fileName);
+    Com_Printf("%s\n", afd->fileName);
 
     if ((afd->f = FS_FOpenFileWrite(afd->fileName)) <= 0) {
         Com_Printf("CL_OpenAVIForWriting()  couldn't open video file\n");
@@ -684,9 +684,9 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     }
 
 
-    //Com_Printf("getting stream handle\n");
+    Com_Printf("getting stream handle\n");
     afd->file = FS_FileForHandle(afd->f);
-    //Com_Printf("file %p  f:%d\n", afd->file, afd->f);
+    Com_Printf("file %p  f:%d\n", afd->file, afd->f);
     afd->frameRate = cl_aviFrameRate->integer;
     afd->framePeriod = (int)(1000000.0f / afd->frameRate);
     afd->width = cls.glconfig.vidWidth;
@@ -695,11 +695,11 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     //if (cl_aviUseOpenDml->integer) {
     if (cl_aviAllowLargeFiles->integer) {
         afd->useOpenDml = qtrue;
-        //Com_Printf("opendml large avi support\n");
+        Com_Printf("opendml large avi support\n");
     }
     else {
         afd->useOpenDml = qfalse;
-        //Com_Printf("regular avi (size limit)\n");
+        Com_Printf("regular avi (size limit)\n");
     }
 
     if (!Q_stricmp(cl_aviCodec->string, "mjpeg")) {
