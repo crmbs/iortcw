@@ -966,27 +966,32 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			fetchBufferHasAlpha = qtrue;
 			fetchBufferHasRGB = qtrue;
 			glMode = GL_RGBA;
+			Com_Printf("debug 13\n");
 		}
 		else if (!Q_stricmp("gl_rgb", sbuf)) {
 			fetchBufferHasAlpha = qfalse;
 			fetchBufferHasRGB = qtrue;
 			glMode = GL_RGB;
+			Com_Printf("debug 14\n");
 		}
 		else if (!Q_stricmp("gl_bgr", sbuf)) {
 			fetchBufferHasAlpha = qfalse;
 			fetchBufferHasRGB = qfalse;
 			glMode = GL_BGR;
+			Com_Printf("debug 15\n");
 		}
 		else if (!Q_stricmp("gl_bgra", sbuf)) {
 			fetchBufferHasAlpha = qtrue;
 			fetchBufferHasRGB = qfalse;
 			glMode = GL_BGRA;
+			Com_Printf("debug 16\n");
 		}
 		else {
 			ri.Printf(PRINT_ALL, "unknown glmode using GL_RGB\n");
 			fetchBufferHasAlpha = qfalse;
 			fetchBufferHasRGB = qtrue;
 			glMode = GL_RGB;
+			Com_Printf("debug 17\n");
 		}
 
 		if (cmd->jpg || (cmd->avi && cmd->motionJpeg)) {
@@ -994,15 +999,17 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			fetchBuffer = cmd->captureBuffer + 18;
 			fetchBuffer = (byte*)(((uintptr_t)fetchBuffer + 15) & ~15);
 			fetchBuffer -= 18;
+			Com_Printf("debug 18\n");
 		}
 		else {
 			fetchBuffer = cmd->encodeBuffer + 18;
 			fetchBuffer = (byte*)(((uintptr_t)fetchBuffer + 15) & ~15);
 			fetchBuffer -= 18;
+			Com_Printf("debug 19\n");
 		}
 	}
 
-	Com_Printf("debug 13\n");
+	Com_Printf("debug 20\n");
 
 	//FIXME why is this needed?
 	if (useBlur) {
@@ -1098,7 +1105,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		}
 	}
 
-	Com_Printf("debug 14\n");
+	Com_Printf("debug 21\n");
 
 	if (cmd->tga) {
 		byte* buffer;
@@ -1138,7 +1145,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		goto done;
 	}
 
-	Com_Printf("debug 15\n");
+	Com_Printf("debug 22\n");
 
 	if (cmd->jpg || cmd->png) {
 		byte* buffer;
@@ -1186,7 +1193,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		goto done;
 	}
 
-	Com_Printf("debug 16\n");
+	Com_Printf("debug 23\n");
 
 	if (cmd->avi && cmd->motionJpeg)
 	{
@@ -1243,7 +1250,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 		ri.CL_WriteAVIVideoFrame(ri.afdMain, outBuffer + 18, frameSize * 3);
 	}
 
-	Com_Printf("debug 17\n");
+	Com_Printf("debug 24\n");
 
 done:
 
