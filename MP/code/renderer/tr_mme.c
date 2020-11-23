@@ -330,7 +330,7 @@ void R_MME_Shutdown(void) {
 	R_MME_FreeMemory(&shotDataMain);
 }
 
-void R_MME_Init(void) {+
+void R_MME_Init(void) {
 	// MME cvars
 	mme_blurFrames = ri.Cvar_Get ( "mme_blurFrames", "0", CVAR_ARCHIVE );
 	mme_blurOverlap = ri.Cvar_Get ("mme_blurOverlap", "0", CVAR_ARCHIVE );
