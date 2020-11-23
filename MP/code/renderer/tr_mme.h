@@ -80,9 +80,16 @@ extern shotData_t shotDataMain;
 extern shotData_t shotDataLeft;
 
 extern cvar_t *mme_aviFormat;
+extern cvar_t *mme_depthFocus;
+extern cvar_t *mme_depthRange;
+extern cvar_t *mme_saveDepth;
 
 extern cvar_t *mme_blurJitter;
 extern cvar_t *mme_blurStrength;
+
+extern cvar_t *mme_dofFrames;
+extern cvar_t *mme_dofRadius;
+extern cvar_t *mme_dofVisualize;
 
 extern cvar_t *mme_cpuSSE2;
 
