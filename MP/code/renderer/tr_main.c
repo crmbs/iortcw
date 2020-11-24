@@ -48,7 +48,6 @@ static float s_flipMatrix[16] = {
 	0, 0, 0, 1
 };
 
-
 refimport_t ri;
 
 // entities that will have procedurally generated surfaces will just
@@ -839,14 +838,14 @@ void R_SetupProjection(viewParms_t *dest, float zProj, qboolean computeFrustum)
 		eyeJitter[0] = eyeJitter[1] = 0;
 
 		/* Jitter the view */
-		if (mme_dofFrames->integer > 0) {
-			if (r_anaglyphMode->integer == 19 && *ri.SplitVideo && !tr.leftRecorded) {
-				R_MME_JitterView(pixelJitter, eyeJitter, qfalse);
-			}
-			else {
-				R_MME_JitterView(pixelJitter, eyeJitter, qtrue);
-			}
-		}
+		//if (mme_dofFrames->integer > 0) {
+		//	if (r_anaglyphMode->integer == 19 && *ri.SplitVideo && !tr.leftRecorded) {
+		//		R_MME_JitterView(pixelJitter, eyeJitter, qfalse);
+		//	}
+		//	else {
+		//		R_MME_JitterView(pixelJitter, eyeJitter, qtrue);
+		//	}
+		//}
 
 		dx = (pixelJitter[0] * width) / backEnd.viewParms.viewportWidth;
 		dy = (pixelJitter[1] * height) / backEnd.viewParms.viewportHeight;
