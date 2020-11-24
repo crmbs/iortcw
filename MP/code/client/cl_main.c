@@ -167,6 +167,9 @@ cvar_t	*cl_consoleKeys;
 
 cvar_t	*cl_rate;
 
+cvar_t  *cl_demoFile;
+cvar_t  *cl_demoFileBaseName;
+
 clientActive_t cl;
 clientConnection_t clc;
 clientStatic_t cls;
@@ -1181,6 +1184,10 @@ void CL_PlayDemo_f( void ) {
 		return;
 	}
 	Q_strncpyz( clc.demoName, arg, sizeof( clc.demoName ) );
+
+	// we have a valid demo file
+	Cvar_Set("cl_demoFile", clc.demoName);
+	Cvar_Set("cl_demoFileBaseName", FS_BaseName(clc.demoName));
 
 	Con_Close();
 
@@ -4329,6 +4336,9 @@ void CL_Init( void ) {
 	// DHM - Nerve :: Auto-update
 	cl_updateavailable = Cvar_Get( "cl_updateavailable", "0", CVAR_ROM );
 	cl_updatefiles = Cvar_Get( "cl_updatefiles", "", CVAR_ROM );
+
+	cl_demoFile = Cvar_Get("cl_demoFile", "", CVAR_ROM);
+	cl_demoFileBaseName = Cvar_Get("cl_demoFileBaseName", "", CVAR_ROM);
 
 	Q_strncpyz( cls.autoupdateServerNames[0], AUTOUPDATE_SERVER1_NAME, MAX_QPATH );
 	Q_strncpyz( cls.autoupdateServerNames[1], AUTOUPDATE_SERVER2_NAME, MAX_QPATH );

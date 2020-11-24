@@ -526,6 +526,9 @@ extern cvar_t  *cl_language;
 
 //=================================================
 
+extern cvar_t* cl_demoFile;
+extern cvar_t* cl_demoFileBaseName;
+
 //
 // cl_main
 //
