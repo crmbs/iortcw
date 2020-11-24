@@ -583,7 +583,7 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     int startTime;
 
     if (afd->recording) {
-        Com_Printf("^1CL_OpenAVIForWriting() already recording\n");
+        //Com_Printf("^1CL_OpenAVIForWriting() already recording\n");
         return qfalse;
     }
 
@@ -591,7 +591,7 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         afd->PcmBytesInBuffer = 0;  // audio static buffer
     }
 
-    Com_Printf("^2CL_OpenAVIForWriting(%s)\n", fileName);
+    //Com_Printf("^2CL_OpenAVIForWriting(%s)\n", fileName);
 
 #ifdef _FILE_OFFSET_BITS
   //Com_Printf("file offset bits: %d\n", _FILE_OFFSET_BITS);
@@ -647,7 +647,7 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
         else {
             Q_strncpyz(afd->givenFileName, fileName, MAX_QPATH);
         }
-        Com_Printf("^3record: %s\n", afd->givenFileName);
+        //Com_Printf("^3record: %s\n", afd->givenFileName);
     }
     else {
         //Q_strncpyz(afd->givenFileName, afd->fileName, MAX_QPATH);
@@ -684,9 +684,9 @@ qboolean CL_OpenAVIForWriting(aviFileData_t* afd, const char* fileName, qboolean
     }
 
 
-    Com_Printf("getting stream handle\n");
+    //Com_Printf("getting stream handle\n");
     afd->file = FS_FileForHandle(afd->f);
-    Com_Printf("file %p  f:%d\n", afd->file, afd->f);
+    //Com_Printf("file %p  f:%d\n", afd->file, afd->f);
     afd->frameRate = cl_aviFrameRate->integer;
     afd->framePeriod = (int)(1000000.0f / afd->frameRate);
     afd->width = cls.glconfig.vidWidth;
