@@ -1006,11 +1006,11 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 	}
 
 	//FIXME why is this needed?
-	if (useBlur) {
-		glMode = GL_BGR;
-		fetchBufferHasAlpha = qfalse;
-		fetchBufferHasRGB = qfalse;
-	}
+	//if (useBlur) {
+	//	glMode = GL_BGR;
+	//	fetchBufferHasAlpha = qfalse;
+	//	fetchBufferHasRGB = qfalse;
+	//}
 
 	if (!useBlur) {
 		//ri.Printf(PRINT_ALL, "no blur pic count: %d\n", cmd->picCount + 1);
