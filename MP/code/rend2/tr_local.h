@@ -34,8 +34,10 @@ If you have questions concerning this license or the applicable additional terms
 #include "../qcommon/qfiles.h"
 #include "../qcommon/qcommon.h"
 #include "../renderer/tr_public.h"
+#include "../client/cl_avi.h"
+#include "../renderer/tr_mme.h"
 #include "qgl.h"
-#include "../renderer/iqm.h"
+#include "iqm.h"
 
 #define GLE(ret, name, ...) extern name##proc * qgl##name;
 QGL_1_1_PROCS;
@@ -2200,6 +2202,8 @@ void    R_DeleteTextures( void );
 int     R_SumOfUsedImages( void );
 void    R_InitSkins( void );
 skin_t  *R_GetSkinByHandle( qhandle_t hSkin );
+
+const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData);
 
 int R_ComputeLOD( trRefEntity_t *ent );
 
