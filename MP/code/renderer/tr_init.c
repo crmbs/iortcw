@@ -1029,24 +1029,16 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			ri.Printf(PRINT_ALL, "^1ERROR: not capturing because blur allocation failed\n");
 		}
 
-		//Com_Printf("debug 0");
-
 		if (shotData->control.totalFrames && !shotData->allocFailed) {
 			//mmeBlurBlock_t *blurShot = &blurData.shot;
 			//mmeBlurBlock_t *blurDepth = &blurData.depth;
 			//mmeBlurBlock_t *blurStencil = &blurData.stencil;
 
-			Com_Printf("debug 1");
-
 			/* Test if we blur with overlapping frames */
 			if (shotData->control.overlapFrames) {
 
-				Com_Printf("debug 2");
-
 				/* First frame in a sequence, fill the buffer with the last frames */
 				if (shotData->control.totalIndex == 0) {
-
-					Com_Printf("debug 3");
 
 					int i;
 					for (i = 0; i < shotData->control.overlapFrames; i++) {
@@ -1067,18 +1059,12 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 					R_GammaCorrect(shotBuf, cmd->width * cmd->height * (3 + fetchBufferHasAlpha));
 
 					R_MME_BlurOverlapAdd(&shotData->shot, 0);
-
-					Com_Printf("debug 4");
 				}
 
 				shotData->control.overlapIndex++;
 				shotData->control.totalIndex++;
-
-				Com_Printf("debug 5");
 			}
 			else {  // shotData->overlapFrames, just blur no overlap
-
-				Com_Printf("debug 6");
 
 				qglReadPixels(0, 0, cmd->width, cmd->height, glMode, GL_UNSIGNED_BYTE, fetchBuffer + 18);
 				//R_MME_GetMultiShot(fetchBuffer + 18, cmd->width, cmd->height, glMode);
@@ -1089,14 +1075,9 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 				R_MME_BlurAccumAdd(&shotData->shot, outAlign);
 
 				shotData->control.totalIndex++;
-
-				Com_Printf("debug 7");
-
 			}  // shotData->overlapTotal
 
 			if (shotData->control.totalIndex >= shotData->control.totalFrames) {
-
-				Com_Printf("debug 8");
 
 				shotData->control.totalIndex = 0;
 				R_MME_BlurAccumShift(&shotData->shot);
@@ -1105,11 +1086,8 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 				//ri.Printf(PRINT_ALL, "pic count: %d\n", cmd->picCount);
 				if (((cmd->picCount + 1) * blurFrames) % frameRateDivider != 0) {
-					Com_Printf("debug 9");
 					goto dontwrite;
 				}
-
-				Com_Printf("debug 10");
 			}
 			else {
 				// skip saving the shot
