@@ -4547,4 +4547,26 @@ qboolean FS_VerifyPak( const char *pak ) {
 	return qfalse;
 }
 
+char* FS_BaseName(const char* path)
+{
+	static char baseName[MAX_OSPATH];
+	int i;
+	int plen;
+	qboolean isWindows = qfalse;
 
+#ifdef _WIN32
+	isWindows = qtrue;
+#endif
+
+	Q_strncpyz(baseName, path, sizeof(baseName));
+
+	plen = strlen(path);
+	for (i = plen - 1; i >= 0; i--) {
+		if (path[i] == '/' || (isWindows && path[i] == '\\')) {
+			Q_strncpyz(baseName, path + i + 1, sizeof(baseName));
+			break;
+		}
+	}
+
+	return baseName;
+}

@@ -822,6 +822,8 @@ void	FS_FilenameCompletion( const char *dir, const char *ext,
 const char *FS_GetCurrentGameDir(void);
 qboolean FS_Which(const char *filename, void *searchPath);
 
+char* FS_BaseName(const char* path);
+
 char *FS_BuildOSPath( const char *base, const char *game, const char *qpath );
 
 #if !defined( DEDICATED )
