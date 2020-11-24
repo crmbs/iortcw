@@ -959,13 +959,9 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 		sbuf = finalName;
 
-		//fetchBufferHasAlpha = qtrue;
-		//fetchBufferHasRGB = qtrue;
-		//glMode = GL_RGBA;
-
-		fetchBufferHasAlpha = qfalse;
+		fetchBufferHasAlpha = qtrue;
 		fetchBufferHasRGB = qtrue;
-		glMode = GL_RGB;
+		glMode = GL_RGBA;
 
 		//ri.Cvar_VariableStringBuffer("cl_aviFetchMode", sbuf, MAX_QPATH);
 
