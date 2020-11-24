@@ -969,11 +969,15 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 
 		Com_Printf("debug 12.3\n");
 
-		ri.Cvar_VariableStringBuffer("cl_aviFetchMode", sbuf, MAX_QPATH);
+		fetchBufferHasAlpha = qtrue;
+		fetchBufferHasRGB = qtrue;
+		glMode = GL_RGBA;
+
+		//ri.Cvar_VariableStringBuffer("cl_aviFetchMode", sbuf, MAX_QPATH);
 
 		Com_Printf("debug 12.4\n");
 
-		if (!Q_stricmp("gl_rgba", sbuf)) {
+		/*if (!Q_stricmp("gl_rgba", sbuf)) {
 
 			Com_Printf("debug 12.5\n");
 
@@ -1007,7 +1011,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			fetchBufferHasRGB = qtrue;
 			glMode = GL_RGB;
 			Com_Printf("debug 17\n");
-		}
+		}*/
 
 		if (cmd->jpg || (cmd->avi && cmd->motionJpeg)) {
 			//FIXME jpg check not needed anymore

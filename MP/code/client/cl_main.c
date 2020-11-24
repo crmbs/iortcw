@@ -4154,7 +4154,7 @@ void CL_Init( void ) {
 	cl_aviFrameRateDivider = Cvar_Get("cl_aviFrameRateDivider", "1", CVAR_ARCHIVE);
 	cl_aviCodec = Cvar_Get("cl_aviCodec", "uncompressed", CVAR_ARCHIVE);
 	cl_aviAllowLargeFiles = Cvar_Get("cl_aviAllowLargeFiles", "1", CVAR_ARCHIVE);
-	cl_aviFetchMode = Cvar_Get("cl_aviFetchMode", "GL_RGB", CVAR_ARCHIVE);
+	cl_aviFetchMode = Cvar_Get("cl_aviFetchMode", "GL_RGBA", CVAR_ARCHIVE);
 	cl_aviExtension = Cvar_Get("cl_aviExtension", "avi", CVAR_ARCHIVE);
 	cl_aviNoAudioHWOutput = Cvar_Get("cl_aviNoAudioHWOutput", "1", CVAR_ARCHIVE);
 	cl_freezeDemoPauseVideoRecording = Cvar_Get("cl_freezeDemoPauseVideoRecording", "0", CVAR_ARCHIVE);
