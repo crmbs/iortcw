@@ -808,6 +808,8 @@ void R_SetupProjection(viewParms_t *dest, float zProj, qboolean computeFrustum)
 {
 	float	xmin, xmax, ymin, ymax;
 	float	width, height, stereoSep = r_stereoSeparation->value;
+	float	dx, dy;
+	vec2_t	pixelJitter, eyeJitter;
 
 	/*
 	 * offset the view origin of the viewer for stereo rendering 
