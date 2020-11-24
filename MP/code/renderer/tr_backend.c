@@ -1405,6 +1405,10 @@ RB_ExecuteRenderCommands
 void RB_ExecuteRenderCommands( const void *data ) {
 	int t1, t2;
 
+	if (tr.recordingVideo) {
+		R_MME_CheckCvars(qfalse, &shotDataMain);
+	}
+
 	t1 = ri.Milliseconds();
 
 	while ( 1 ) {

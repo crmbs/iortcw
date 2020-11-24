@@ -1029,7 +1029,7 @@ const void* RB_TakeVideoFrameCmd(const void* data, shotData_t* shotData)
 			ri.Printf(PRINT_ALL, "^1ERROR: not capturing because blur allocation failed\n");
 		}
 
-		Com_Printf("debug 0");
+		//Com_Printf("debug 0");
 
 		if (shotData->control.totalFrames && !shotData->allocFailed) {
 			//mmeBlurBlock_t *blurShot = &blurData.shot;
