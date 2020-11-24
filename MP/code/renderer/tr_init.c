@@ -171,6 +171,8 @@ cvar_t	*r_customPixelAspect;
 
 cvar_t  *r_overBrightBits;
 cvar_t  *r_mapOverBrightBits;
+cvar_t  *r_mapOverBrightBitsValue;
+cvar_t  *r_mapOverBrightBitsCap;
 
 cvar_t  *r_debugSurface;
 cvar_t  *r_simpleMipMaps;
@@ -1565,6 +1567,8 @@ void R_Register( void ) {
 	ri.Cvar_CheckRange( r_displayRefresh, 0, 200, qtrue );
 	r_fullbright = ri.Cvar_Get ("r_fullbright", "0", CVAR_LATCH ); // JPW NERVE removed per atvi request
 	r_mapOverBrightBits = ri.Cvar_Get( "r_mapOverBrightBits", "2", CVAR_LATCH );
+	r_mapOverBrightBitsValue = ri.Cvar_Get("r_mapOverBrightBitsValue", "1.0", CVAR_LATCH | CVAR_ARCHIVE);
+	r_mapOverBrightBitsCap = ri.Cvar_Get("r_mapOverBrightBitsCap", "255", CVAR_LATCH | CVAR_ARCHIVE);
 	r_intensity = ri.Cvar_Get( "r_intensity", "1", CVAR_LATCH );
 	r_singleShader = ri.Cvar_Get( "r_singleShader", "0", CVAR_CHEAT | CVAR_LATCH );
 
