@@ -1845,6 +1845,9 @@ Q3R2OBJ = \
   $(B)/rend2/tr_main.o \
   $(B)/rend2/tr_marks.o \
   $(B)/rend2/tr_mesh.o \
+  $(B)/renderer/tr_mme.o \
+  $(B)/renderer/tr_mme_common.o \
+  $(B)/renderer/tr_mme_sse2.o \
   $(B)/rend2/tr_model.o \
   $(B)/rend2/tr_model_iqm.o \
   $(B)/rend2/tr_noise.o \
