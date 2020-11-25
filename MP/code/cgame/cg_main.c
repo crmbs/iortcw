@@ -488,7 +488,7 @@ cvarTable_t cvarTable[] = {
 
 	{ &cg_antilag, "g_antilag", "0", 0 },
 
-	{ &demo_screenShake, "demo_screenShake", "1", CVAR_ARCHIVE }
+	{ &demo_screenShake, "demo_screenShake", "1", CVAR_CHEAT }
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );
