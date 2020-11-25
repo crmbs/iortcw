@@ -345,7 +345,7 @@ void CG_StartCamera( const char *name, qboolean startBlack ) {
 	if ( cgs.gametype != GT_SINGLE_PLAYER )
 		return;
 
-	COM_StripExtension(name, lname);	//----(SA)	added
+	COM_StripExtension(name, lname, sizeof(lname));	//----(SA)	added
 	strcat( lname, ".camera" );
 
 	if (trap_loadCamera(CAM_PRIMARY, va("cameras/%s", lname))) {

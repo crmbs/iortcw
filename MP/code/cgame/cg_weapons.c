@@ -1157,7 +1157,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		else
 			strcpy( path, item->world_model[i] );
 
-		COM_StripExtension( path, path );
+		COM_StripExtension( path, path, sizeof(path));
 		strcat( path, "_flash.md3" );
 		weaponInfo->flashModel[i] = trap_R_RegisterModel( path );
 
@@ -1167,7 +1167,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 				strcpy( path, comppath );
 			else
 				strcpy( path, item->world_model[i] );
-			COM_StripExtension( path, path );
+			COM_StripExtension( path, path, sizeof(path));
 			if(j==W_PART_1)
 				strcat( path, "_barrel.md3" );
 			else
@@ -1191,7 +1191,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 				strcpy( path, comppath );
 			else
 				strcpy( path, item->world_model[2] );
-			COM_StripExtension( path, path );
+			COM_StripExtension( path, path, sizeof(path));
 			strcat( path, "_barrel6b.md3" );
 			weaponInfo->partModels[i][W_PART_7] = trap_R_RegisterModel( path );
 		}
@@ -1205,7 +1205,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 			strcpy( path, comppath );
 		else
 			strcpy( path, item->world_model[W_FP_MODEL] );
-		COM_StripExtension( path, path );
+		COM_StripExtension( path, path, sizeof(path));
 		strcat( path, "_scope.md3" );
 		weaponInfo->modModel[0] = trap_R_RegisterModel( path );
 	}
@@ -1214,7 +1214,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		strcpy( path, comppath );
 	else
 		strcpy( path, item->world_model[W_FP_MODEL] );
-	COM_StripExtension( path, path );
+	COM_StripExtension( path, path, sizeof(path));
 	strcat( path, "_hand.md3" );
 	weaponInfo->handsModel = trap_R_RegisterModel( path );
 
@@ -1227,7 +1227,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		strcpy( path, comppath );
 	else
 		strcpy( path, item->world_model[W_TP_MODEL] );
-	COM_StripExtension( path, path );
+	COM_StripExtension( path, path, sizeof(path));
 	strcat( path, "_stand.md3" );
 	weaponInfo->standModel = trap_R_RegisterModel( path );
 //----(SA)	end
