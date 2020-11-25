@@ -2475,6 +2475,11 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, int powerups, int team, enti
 		trap_R_AddRefEntityToScene( ent );
 	}
 
+	if (demo_battleSuit.integer) {
+		ent->customShader = cgs.media.battleSuitShader;
+		trap_R_AddRefEntityToScene( ent );
+	}
+
 	*ent = backupRefEnt;
 }
 

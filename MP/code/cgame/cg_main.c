@@ -283,6 +283,7 @@ vmCvar_t cg_bluelimbotime;
 vmCvar_t cg_autoReload;
 vmCvar_t cg_antilag;
 
+vmCvar_t demo_battleSuit;
 vmCvar_t demo_screenShake;
 
 typedef struct {
@@ -488,6 +489,7 @@ cvarTable_t cvarTable[] = {
 
 	{ &cg_antilag, "g_antilag", "0", 0 },
 
+	{ &demo_battleSuit, "demo_battleSuit", "0", CVAR_CHEAT },
 	{ &demo_screenShake, "demo_screenShake", "1", CVAR_CHEAT }
 };
 
@@ -1079,6 +1081,9 @@ static void CG_RegisterGraphics( void ) {
 	for ( i = 0 ; i < 11 ; i++ ) {
 		cgs.media.numberShaders[i] = trap_R_RegisterShader( sb_nums[i] );
 	}
+
+	cgs.media.battleSuitShader = trap_R_RegisterShader("powerups/battleSuit");
+	cgs.media.battleWeaponShader = trap_R_RegisterShader("powerups/battleWeapon");
 
 // JPW NERVE
 	cgs.media.fleshSmokePuffShader = trap_R_RegisterShader( "fleshimpactsmokepuff" ); // JPW NERVE
