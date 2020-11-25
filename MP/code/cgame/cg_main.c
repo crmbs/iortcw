@@ -283,6 +283,8 @@ vmCvar_t cg_bluelimbotime;
 vmCvar_t cg_autoReload;
 vmCvar_t cg_antilag;
 
+vmCvar_t demo_screenShake;
+
 typedef struct {
 	vmCvar_t    *vmCvar;
 	char        *cvarName;
@@ -484,7 +486,9 @@ cvarTable_t cvarTable[] = {
 
 	{ &cg_autoReload, "cg_autoReload", "1", CVAR_ARCHIVE },
 
-	{ &cg_antilag, "g_antilag", "0", 0 }
+	{ &cg_antilag, "g_antilag", "0", 0 },
+
+	{ &demo_screenShake, "demo_screenShake", "1", CVAR_ARCHIVE }
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );
