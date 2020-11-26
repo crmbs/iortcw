@@ -2225,8 +2225,6 @@ Will perform callbacks to make the loading info screen update.
 */
 void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	const char  *s;
-	int i;
-	char buff[1024];
 
 	// clear everything
 	memset( &cgs, 0, sizeof( cgs ) );
@@ -2313,14 +2311,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	// load the new map
 	CG_LoadingString( "collision map" );
 
-	Com_Printf("cgame: load map %s\n", cgs.mapname);
-	Q_strncpyz(buff, cgs.mapname, sizeof(buff));
-	i = strlen(buff);
-	buff[i - 1] = 'g';
-	buff[i - 2] = 'f';
-	buff[i - 3] = 'c';
-	trap_SendConsoleCommand(va("exec %s\n", buff));
-	trap_CM_LoadMap(cgs.mapname);
+	trap_CM_LoadMap( cgs.mapname );
 
 	String_Init();
 
