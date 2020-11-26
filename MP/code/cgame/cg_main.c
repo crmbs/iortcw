@@ -2312,9 +2312,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	CG_LoadingString( "collision map" );
 
 	Com_Printf("cgame: load map %s\n", cgs.mapname);
-	trap_GetRealMapName(cgs.mapname, cgs.realMapName, sizeof(cgs.realMapName));
-	//Com_Printf("^3map: '%s' -> '%s'\n", cgs.mapname, cgs.realMapName);
-	Q_strncpyz(buff, cgs.realMapName, sizeof(buff));
+	Q_strncpyz(buff, cgs.mapname, sizeof(buff));
 	i = strlen(buff);
 	buff[i - 1] = 'g';
 	buff[i - 2] = 'f';
