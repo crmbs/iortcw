@@ -1773,6 +1773,7 @@ extern vmCvar_t cg_descriptiveText;
 extern vmCvar_t cg_autoReload;
 extern vmCvar_t cg_antilag;
 
+extern vmCvar_t	demo_drawBlood;
 extern vmCvar_t demo_screenshake;
 
 //

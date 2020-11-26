@@ -283,6 +283,7 @@ vmCvar_t cg_bluelimbotime;
 vmCvar_t cg_autoReload;
 vmCvar_t cg_antilag;
 
+vmCvar_t demo_drawBlood;
 vmCvar_t demo_screenshake;
 
 typedef struct {
@@ -488,6 +489,7 @@ cvarTable_t cvarTable[] = {
 
 	{ &cg_antilag, "g_antilag", "0", 0 },
 
+	{ &demo_drawBlood, "demo_drawBlood", "1", CVAR_ARCHIVE },
 	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT }
 };
 

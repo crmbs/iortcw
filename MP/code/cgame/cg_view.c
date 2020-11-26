@@ -1668,7 +1668,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	DEBUGTIME
 
 	// first person blend blobs, done after AnglesToAxis
-	if ( !cg.renderingThirdPerson ) {
+	if ( !cg.renderingThirdPerson && demo_drawBlood.integer ) {
 		CG_DamageBlendBlob();
 	}
 
@@ -1742,7 +1742,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	DEBUGTIME
 
 	// Ridah, fade the screen
-	CG_DrawScreenFade();
+	if (demo_drawBlood.integer) CG_DrawScreenFade();
 
 	DEBUGTIME
 

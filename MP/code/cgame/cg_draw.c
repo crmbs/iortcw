@@ -3743,14 +3743,14 @@ static void CG_Draw2D(stereoFrame_t stereoFrame) {
 		return;
 	}
 
-	CG_ScreenFade();
+	if (demo_drawBlood.integer) CG_ScreenFade();
 
 	if ( cg.snap->ps.pm_type == PM_INTERMISSION ) {
 		CG_DrawIntermission();
 		return;
 	}
 
-	CG_DrawFlashBlendBehindHUD();
+	if (demo_drawBlood.integer) CG_DrawFlashBlendBehindHUD();
 
 #ifndef PRE_RELEASE_DEMO
 	if ( cg_uselessNostalgia.integer ) {
@@ -3832,7 +3832,7 @@ static void CG_Draw2D(stereoFrame_t stereoFrame) {
 	}
 
 	// Ridah, draw flash blends now
-	CG_DrawFlashBlend();
+	if (demo_drawBlood.integer) CG_DrawFlashBlend();
 }
 
 // NERVE - SMF
