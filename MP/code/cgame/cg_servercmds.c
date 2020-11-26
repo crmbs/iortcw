@@ -1464,7 +1464,7 @@ static void CG_ServerCommand( void ) {
 	}
 
 	// NERVE - SMF
-	if ( !strcmp( cmd, "shake" ) && demo_screenshake.integer) {
+	if ( !strcmp( cmd, "shake" )) {
 		CG_StartShakeCamera( atof( CG_Argv( 1 ) ) );
 		return;
 	}

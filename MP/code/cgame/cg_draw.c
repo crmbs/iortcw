@@ -3930,7 +3930,9 @@ void CG_DrawActive( stereoFrame_t stereoView ) {
 	}
 	// -NERVE - SMF
 
-	CG_ShakeCamera();       // NERVE - SMF
+	if (demo_screenshake.integer) {
+		CG_ShakeCamera();       // NERVE - SMF
+	}
 
 	trap_R_RenderScene( &cg.refdef );
 
