@@ -163,6 +163,7 @@ typedef enum {
 
 // dhm
 #define CS_SHADERSTATE          30
+
 #define CS_ITEMS                31      // string of 0's and 1's that tell which items are present
 
 #define CS_SCREENFADE           32      // Ridah, used to tell clients to fade their screen to black/normal
@@ -171,6 +172,8 @@ typedef enum {
 #define CS_TARGETEFFECT         35      //----(SA)
 
 #define CS_WOLFINFO             36      // NERVE - SMF
+
+#define	CS_ATMOSEFFECT		    37
 
 #define CS_MODELS               64
 #define CS_SOUNDS               ( CS_MODELS + MAX_MODELS )

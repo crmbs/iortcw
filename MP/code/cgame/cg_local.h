@@ -1720,6 +1720,10 @@ extern vmCvar_t cg_currentSelectedPlayerName;
 
 // Rafael - particle switch
 extern vmCvar_t cg_wolfparticles;
+extern vmCvar_t cg_atmosphericEffects;
+extern vmCvar_t cg_lowAtmosphericEffects;
+extern vmCvar_t cg_forceAtmosphericEffects;
+
 // done
 
 // Ridah
@@ -1776,6 +1780,10 @@ extern vmCvar_t cg_antilag;
 extern vmCvar_t	demo_drawBlood;
 extern vmCvar_t demo_screenshake;
 
+extern vmCvar_t cg_demoSmoothing;
+extern vmCvar_t cg_demoSmoothingAngles;
+extern vmCvar_t cg_demoSmoothingTeleportCheck;
+
 //
 // cg_main.c
 //
@@ -1820,6 +1828,11 @@ void CG_ZoomUp_f( void );
 void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demoPlayback );
 
 void CG_Concussive( centity_t *cent );
+
+// cg_atmospheric.c RealRTCW
+void CG_EffectParse(const char* effectstr);
+void CG_AddAtmosphericEffects(void);
+qboolean CG_AtmosphericKludge();
 
 //
 // cg_drawtools.c

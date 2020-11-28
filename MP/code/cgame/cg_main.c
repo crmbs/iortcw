@@ -209,7 +209,10 @@ vmCvar_t pmove_msec;
 
 // Rafael - particle switch
 vmCvar_t cg_wolfparticles;
-// done
+
+vmCvar_t cg_atmosphericEffects;
+vmCvar_t cg_lowAtmosphericEffects;
+vmCvar_t cg_forceAtmosphericEffects;
 
 // Ridah
 vmCvar_t cg_gameType;
@@ -285,6 +288,10 @@ vmCvar_t cg_antilag;
 
 vmCvar_t demo_drawBlood;
 vmCvar_t demo_screenshake;
+
+vmCvar_t cg_demoSmoothing;
+vmCvar_t cg_demoSmoothingAngles;
+vmCvar_t cg_demoSmoothingTeleportCheck;
 
 typedef struct {
 	vmCvar_t    *vmCvar;
@@ -438,6 +445,10 @@ cvarTable_t cvarTable[] = {
 	{ &cg_wolfparticles, "cg_wolfparticles", "1", CVAR_ARCHIVE },
 	// done
 
+	{ &cg_atmosphericEffects, "cg_atmosphericEffects", "1", CVAR_ARCHIVE, },
+	{ &cg_lowAtmosphericEffects, "cg_lowAtmosphericEffects", "1", 0 },
+	{ &cg_forceAtmosphericEffects, "cg_forceAtmosphericEffects", "0", CVAR_LATCH },
+
 	// Ridah
 	{ &cg_gameType, "g_gametype", "0", 0 }, // communicated by systeminfo
 	{ &cg_norender, "cg_norender", "0", 0 },  // only used during single player, to suppress rendering until the server is ready
@@ -490,7 +501,11 @@ cvarTable_t cvarTable[] = {
 	{ &cg_antilag, "g_antilag", "0", 0 },
 
 	{ &demo_drawBlood, "demo_drawBlood", "1", CVAR_ARCHIVE },
-	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT }
+	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT },
+
+	{ &cg_demoSmoothing, "cg_demoSmoothing", "1", CVAR_ARCHIVE },
+	{ &cg_demoSmoothingAngles, "1", CVAR_ARCHIVE },
+	{ &cg_demoSmoothingTeleportCheck, "1", CVAR_ARCHIVE }
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );

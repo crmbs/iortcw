@@ -1690,6 +1690,8 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 		CG_AddLocalEntities();
 
 		DEBUGTIME
+
+		CG_AddAtmosphericEffects();
 	}
 	// Rafael mg42
 	if ( !( cg.snap->ps.persistant[PERS_HWEAPON_USE] ) ) {
