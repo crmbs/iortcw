@@ -289,10 +289,6 @@ vmCvar_t cg_antilag;
 vmCvar_t demo_drawBlood;
 vmCvar_t demo_screenshake;
 
-vmCvar_t cg_demoSmoothing;
-vmCvar_t cg_demoSmoothingAngles;
-vmCvar_t cg_demoSmoothingTeleportCheck;
-
 typedef struct {
 	vmCvar_t    *vmCvar;
 	char        *cvarName;
@@ -501,11 +497,7 @@ cvarTable_t cvarTable[] = {
 	{ &cg_antilag, "g_antilag", "0", 0 },
 
 	{ &demo_drawBlood, "demo_drawBlood", "1", CVAR_ARCHIVE },
-	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT },
-
-	{ &cg_demoSmoothing, "cg_demoSmoothing", "1", CVAR_ARCHIVE },
-	{ &cg_demoSmoothingAngles, "1", CVAR_ARCHIVE },
-	{ &cg_demoSmoothingTeleportCheck, "1", CVAR_ARCHIVE }
+	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT }
 };
 
 static int  cvarTableSize = ARRAY_LEN( cvarTable );

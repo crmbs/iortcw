@@ -1780,10 +1780,6 @@ extern vmCvar_t cg_antilag;
 extern vmCvar_t	demo_drawBlood;
 extern vmCvar_t demo_screenshake;
 
-extern vmCvar_t cg_demoSmoothing;
-extern vmCvar_t cg_demoSmoothingAngles;
-extern vmCvar_t cg_demoSmoothingTeleportCheck;
-
 //
 // cg_main.c
 //
