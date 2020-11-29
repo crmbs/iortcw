@@ -986,6 +986,36 @@ typedef struct {
 
 	pmoveExt_t pmext;
 
+	rawCameraPathKeyPoint_t rawCameraPoints[MAX_RAWCAMERAPOINTS];
+	int numRawCameraPoints;
+
+	//cameraPathKeyPoint_t cameraPoints[MAX_CAMERAPOINTS];
+	cameraPoint_t cameraPoints[MAX_CAMERAPOINTS];
+	cameraPoint_t* cameraPointsPointer;
+	vec3_t splinePoints[MAX_SPLINEPOINTS];
+	int	splinePointsCameraPoints[MAX_SPLINEPOINTS];
+	int numSplinePoints;
+
+	int numCameraPoints;
+	int numQ3mmeCameraPoints;
+	int selectedCameraPointMin;
+	int selectedCameraPointMax;
+
+	int selectedCameraPointField;
+
+	qboolean cameraPlaying;
+	qboolean cameraQ3mmePlaying;
+	qboolean cameraPlayedLastFrame;
+	int currentCameraPoint;
+	qboolean atCameraPoint;
+	qboolean cameraWaitToSync;
+	qboolean cameraJustStarted;
+	qboolean playCameraCommandIssued;
+	qboolean playQ3mmeCameraCommandIssued;
+	double cameraPointCommandTime;
+	vec3_t cameraLastOrigin;
+	vec3_t cameraVelocity;
+
 } cg_t;
 
 #define NUM_FUNNEL_SPRITES  21
