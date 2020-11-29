@@ -2,7 +2,7 @@
 
 // trap_FS_*
 #ifdef CGAME
-  #include "../cgame/cg_local.h"
+  #include "cg_local.h"
 #else  // game
   #include "g_local.h"
 #endif
