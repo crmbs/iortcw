@@ -41,6 +41,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "../renderer/tr_types.h"
 #include "../game/bg_public.h"
 #include "cg_public.h"
+#include "cg_camera.h"
 
 
 #define POWERUP_BLINKS      5
@@ -992,6 +993,48 @@ typedef struct {
 	vec3_t cameraShakeAngles;
 
 	float rumbleScale;          //RUMBLE FX using new shakeCamera code
+
+	rawCameraPathKeyPoint_t rawCameraPoints[MAX_RAWCAMERAPOINTS];
+	int numRawCameraPoints;
+
+	//camera
+	cameraPoint_t cameraPoints[MAX_CAMERAPOINTS];
+	cameraPoint_t* cameraPointsPointer;
+	vec3_t splinePoints[MAX_SPLINEPOINTS];
+	int	splinePointsCameraPoints[MAX_SPLINEPOINTS];
+	int numSplinePoints;
+
+	int numCameraPoints;
+	int numQ3mmeCameraPoints;
+	int selectedCameraPointMin;
+	int selectedCameraPointMax;
+
+	int selectedCameraPointField;
+
+	qboolean cameraPlaying;
+	qboolean cameraQ3mmePlaying;
+	qboolean cameraPlayedLastFrame;
+	int currentCameraPoint;
+	qboolean atCameraPoint;
+	qboolean cameraWaitToSync;
+	qboolean cameraJustStarted;
+	qboolean playCameraCommandIssued;
+	qboolean playQ3mmeCameraCommandIssued;
+	double cameraPointCommandTime;
+	vec3_t cameraLastOrigin;
+	vec3_t cameraVelocity;
+
+	int numNoMoveClients;
+
+	qboolean offlineDemoSkipEvents;
+	int lastWeapon;
+	vec3_t color1;  // our rail
+	vec3_t color2;  // our rail
+
+	double vibrateCameraTime;
+	double vibrateCameraValue;
+	double vibrateCameraPhase;
+	vec3_t vibrateCameraOrigin;
 
 } cg_t;
 
