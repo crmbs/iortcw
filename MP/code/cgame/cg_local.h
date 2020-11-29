@@ -1020,6 +1020,12 @@ typedef struct {
 
 } cg_t;
 
+typedef struct {
+	vec3_t origin;
+	//byte color[4];
+	vec3_t angles;
+} rawCameraPathKeyPoint_t;
+
 #define NUM_FUNNEL_SPRITES  21
 #define MAX_LOCKER_DEBRIS   5
 
