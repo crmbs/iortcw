@@ -6,7 +6,7 @@
 #include "cg_q3mme_demos_camera.h"
 #include "cg_q3mme_demos_capture.h"  // demoSaveLine
 #include "cg_syscalls.h"  // trap_Print, trap_FS_Write
-#include "../game/bg_xmlparser.h"
+#include "bg_xmlparser.h"
 
 // mov_smoothCamPos renamed to cg_q3mmeCameraSmoothPos
 

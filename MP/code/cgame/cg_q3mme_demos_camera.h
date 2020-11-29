@@ -3,7 +3,7 @@
 
 #if 0
 #include "../qcommon/q_shared.h"
-#include "../game/bg_xmlparser.h"
+#include "bg_xmlparser.h"
 #include "cg_local.h"
 #include "cg_q3mme_demos_math.h"
 #endif
