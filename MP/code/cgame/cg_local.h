@@ -41,7 +41,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "../renderer/tr_types.h"
 #include "../game/bg_public.h"
 #include "cg_public.h"
+#include "cg_camera.h"
 
+#define MAX_RAWCAMERAPOINTS 32768  //4192
 
 #define POWERUP_BLINKS      5
 
