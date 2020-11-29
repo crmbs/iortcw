@@ -1,11 +1,5 @@
 #include "bg_xmlparser.h"
-
-// trap_FS_*
-#ifdef CGAME
-  #include "cg_local.h"
-#else  // game
-  #include "g_local.h"
-#endif
+#include "cg_local.h"
 
 qboolean BG_XMLError(BG_XMLParse_t *parse, const char *msg, ... ) {
 	va_list		argptr;
