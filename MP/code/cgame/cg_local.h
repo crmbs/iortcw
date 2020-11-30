@@ -714,6 +714,12 @@ typedef struct {
 #define MAX_SPAWN_VARS_CHARS    2048
 
 typedef struct {
+	vec3_t origin;
+	//byte color[4];
+	vec3_t angles;
+} rawCameraPathKeyPoint_t;
+
+typedef struct {
 	int clientFrame;                // incremented each frame
 
 	int clientNum;
@@ -1019,12 +1025,6 @@ typedef struct {
 	vec3_t cameraVelocity;
 
 } cg_t;
-
-typedef struct {
-	vec3_t origin;
-	//byte color[4];
-	vec3_t angles;
-} rawCameraPathKeyPoint_t;
 
 #define NUM_FUNNEL_SPRITES  21
 #define MAX_LOCKER_DEBRIS   5
