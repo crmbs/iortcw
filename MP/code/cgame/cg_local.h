@@ -1024,6 +1024,18 @@ typedef struct {
 	vec3_t cameraLastOrigin;
 	vec3_t cameraVelocity;
 
+	int viewEnt;
+	int chaseEnt;
+	vec3_t viewEntAngles;
+	float viewEntOffsetX;
+	float viewEntOffsetY;
+	float viewEntOffsetZ;
+	float chaseEntOffsetX;
+	float chaseEntOffsetY;
+	float chaseEntOffsetZ;
+	vec3_t lastSetChaseMoveAngles;
+	int lastAutoChaseMissileEnt;
+
 } cg_t;
 
 #define NUM_FUNNEL_SPRITES  21
