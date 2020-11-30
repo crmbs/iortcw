@@ -513,6 +513,151 @@ static void CG_DumpLocation_f( void ) {
 			   (int) cg.snap->ps.origin[0], (int) cg.snap->ps.origin[1], (int) cg.snap->ps.origin[2] );
 }
 
+static void CG_AddCameraPoint_f(void)
+{
+	cameraPoint_t* cp;
+	int i;
+	int j;
+	qboolean incrementCameraPoints;
+	qboolean lastAdded;
+	int cameraPointNum;
+
+	cg.cameraPlaying = qfalse;
+	cg.cameraPlayedLastFrame = qfalse;
+
+	lastAdded = qfalse;
+	incrementCameraPoints = qtrue;
+	cp = NULL;
+	if (cg.atCameraPoint) {
+		// we will be modifying the camera point, not adding a new one
+		incrementCameraPoints = qfalse;
+		cp = &cg.cameraPoints[cg.selectedCameraPointMin];
+		cameraPointNum = cg.selectedCameraPointMin;
+		//Com_Printf("at camera point %d\n", cameraPointNum);
+	}
+	else {
+		for (i = 0; i < cg.numCameraPoints; i++) {
+			//FIXME broken, kept for paused camera point add...
+			if ((double)cg.ftime == cg.cameraPoints[i].cgtime) {
+				// we will be modifying the camera point, not adding a new one
+				incrementCameraPoints = qfalse;
+				cp = &cg.cameraPoints[i];
+				cameraPointNum = i;
+				break;
+			}
+
+			if ((double)cg.ftime < cg.cameraPoints[i].cgtime) {
+				if (cg.numCameraPoints >= MAX_CAMERAPOINTS - 3) {  // three fake ones
+					Com_Printf("too many camera points\n");
+					return;
+				}
+				for (j = cg.numCameraPoints - 1; j >= i; j--) {
+					memcpy(&cg.cameraPoints[j + 1], &cg.cameraPoints[j], sizeof(cameraPoint_t));
+				}
+				cp = &cg.cameraPoints[i];
+				cameraPointNum = i;
+				break;
+			}
+		}
+	}
+
+	if (!cp) {
+		if (cg.numCameraPoints >= MAX_CAMERAPOINTS - 3) {  // three fake ones
+			Com_Printf("too many camera points\n");
+			return;
+		}
+		cp = &cg.cameraPoints[cg.numCameraPoints];
+		cameraPointNum = cg.numCameraPoints;
+		lastAdded = qtrue;
+	}
+
+	if (cg_cameraAddUsePreviousValues.integer && cg.numCameraPoints > 0 && LastAddedCameraPointSet) {
+		*cp = *LastAddedCameraPointPtr;
+	}
+	else {
+		memset(cp, 0, sizeof(*cp));
+	}
+
+	VectorCopy(cg.refdef.vieworg, cp->origin);
+	VectorCopy(cg.refdefViewAngles, cp->angles);
+	cp->cgtime = cg.ftime;
+
+	if (!cg_cameraAddUsePreviousValues.integer || cg.numCameraPoints == 0 || LastAddedCameraPointSet == qfalse) {
+		char* type;
+
+		type = cg_cameraDefaultOriginType.string;
+		if (!Q_stricmp(type, "spline")) {
+			cp->type = CAMERA_SPLINE;
+		}
+		else if (!Q_stricmp(type, "interp")) {
+			cp->type = CAMERA_INTERP;
+		}
+		else if (!Q_stricmp(type, "jump")) {
+			cp->type = CAMERA_JUMP;
+		}
+		else if (!Q_stricmp(type, "curve")) {
+			cp->type = CAMERA_CURVE;
+		}
+		else if (!Q_stricmp(type, "splinebezier")) {
+			cp->type = CAMERA_SPLINE_BEZIER;
+		}
+		else if (!Q_stricmp(type, "splinecatmullrom")) {
+			cp->type = CAMERA_SPLINE_CATMULLROM;
+		}
+		else {
+			cp->type = CAMERA_SPLINE_BEZIER;
+		}
+		cp->viewType = CAMERA_ANGLES_SPLINE;
+		cp->rollType = CAMERA_ROLL_AS_ANGLES;
+		cp->splineType = SPLINE_FIXED;
+		cp->numSplines = DEFAULT_NUM_SPLINES;
+		cp->viewEnt = -1;
+		cp->fov = -1;
+		cp->fovType = CAMERA_FOV_USE_CURRENT;
+
+		cp->flags = CAM_ORIGIN | CAM_ANGLES | CAM_FOV;
+	}
+
+	LastAddedCameraPointSet = qtrue;
+
+	cp->useOriginVelocity = qfalse;
+	cp->useAnglesVelocity = qfalse;
+	cp->useXoffsetVelocity = qfalse;
+	cp->useYoffsetVelocity = qfalse;
+	cp->useZoffsetVelocity = qfalse;
+	cp->useFovVelocity = qfalse;
+	cp->useRollVelocity = qfalse;
+
+	if (cg.viewEnt > -1) {
+		cp->viewType = CAMERA_ANGLES_ENT;
+		cp->viewEnt = cg.viewEnt;
+		cp->offsetType = CAMERA_OFFSET_INTERP;
+		cp->xoffset = cg.viewEntOffsetX;
+		cp->yoffset = cg.viewEntOffsetY;
+		cp->zoffset = cg.viewEntOffsetZ;
+		VectorCopy(cg_entities[cg.viewEnt].lerpOrigin, cp->viewEntStartingOrigin);
+		//VectorCopy(cg_entities[cg.viewEnt].currentState.pos.trBase, cp->viewEntStartingOrigin);
+		cp->viewEntStartingOriginSet = qtrue;
+	}
+
+	if (incrementCameraPoints) {
+		cg.numCameraPoints++;
+	}
+
+	LastAddedCameraPointPtr = cp;
+
+	if (lastAdded) {
+		CG_UpdateCameraInfoExt(cg.numCameraPoints - 1);
+	}
+	else {
+		CG_UpdateCameraInfo();
+	}
+
+	cg.selectedCameraPointMin = cameraPointNum;
+	cg.selectedCameraPointMax = cameraPointNum;
+
+	//Com_Printf("add camera point selected : %d\n", cg.selectedCameraPointMin);
+}
 
 typedef struct {
 	char    *cmd;
@@ -690,150 +835,4 @@ void CG_InitConsoleCommands( void ) {
 	trap_AddCommand( "reset_match" );
 	trap_AddCommand( "swap_teams" );
 	// NERVE - SMF
-}
-
-static void CG_AddCameraPoint_f(void)
-{
-	cameraPoint_t* cp;
-	int i;
-	int j;
-	qboolean incrementCameraPoints;
-	qboolean lastAdded;
-	int cameraPointNum;
-
-	cg.cameraPlaying = qfalse;
-	cg.cameraPlayedLastFrame = qfalse;
-
-	lastAdded = qfalse;
-	incrementCameraPoints = qtrue;
-	cp = NULL;
-	if (cg.atCameraPoint) {
-		// we will be modifying the camera point, not adding a new one
-		incrementCameraPoints = qfalse;
-		cp = &cg.cameraPoints[cg.selectedCameraPointMin];
-		cameraPointNum = cg.selectedCameraPointMin;
-		//Com_Printf("at camera point %d\n", cameraPointNum);
-	}
-	else {
-		for (i = 0; i < cg.numCameraPoints; i++) {
-			//FIXME broken, kept for paused camera point add...
-			if ((double)cg.ftime == cg.cameraPoints[i].cgtime) {
-				// we will be modifying the camera point, not adding a new one
-				incrementCameraPoints = qfalse;
-				cp = &cg.cameraPoints[i];
-				cameraPointNum = i;
-				break;
-			}
-
-			if ((double)cg.ftime < cg.cameraPoints[i].cgtime) {
-				if (cg.numCameraPoints >= MAX_CAMERAPOINTS - 3) {  // three fake ones
-					Com_Printf("too many camera points\n");
-					return;
-				}
-				for (j = cg.numCameraPoints - 1; j >= i; j--) {
-					memcpy(&cg.cameraPoints[j + 1], &cg.cameraPoints[j], sizeof(cameraPoint_t));
-				}
-				cp = &cg.cameraPoints[i];
-				cameraPointNum = i;
-				break;
-			}
-		}
-	}
-
-	if (!cp) {
-		if (cg.numCameraPoints >= MAX_CAMERAPOINTS - 3) {  // three fake ones
-			Com_Printf("too many camera points\n");
-			return;
-		}
-		cp = &cg.cameraPoints[cg.numCameraPoints];
-		cameraPointNum = cg.numCameraPoints;
-		lastAdded = qtrue;
-	}
-
-	if (cg_cameraAddUsePreviousValues.integer && cg.numCameraPoints > 0 && LastAddedCameraPointSet) {
-		*cp = *LastAddedCameraPointPtr;
-	}
-	else {
-		memset(cp, 0, sizeof(*cp));
-	}
-
-	VectorCopy(cg.refdef.vieworg, cp->origin);
-	VectorCopy(cg.refdefViewAngles, cp->angles);
-	cp->cgtime = cg.ftime;
-
-	if (!cg_cameraAddUsePreviousValues.integer || cg.numCameraPoints == 0 || LastAddedCameraPointSet == qfalse) {
-		char* type;
-
-		type = cg_cameraDefaultOriginType.string;
-		if (!Q_stricmp(type, "spline")) {
-			cp->type = CAMERA_SPLINE;
-		}
-		else if (!Q_stricmp(type, "interp")) {
-			cp->type = CAMERA_INTERP;
-		}
-		else if (!Q_stricmp(type, "jump")) {
-			cp->type = CAMERA_JUMP;
-		}
-		else if (!Q_stricmp(type, "curve")) {
-			cp->type = CAMERA_CURVE;
-		}
-		else if (!Q_stricmp(type, "splinebezier")) {
-			cp->type = CAMERA_SPLINE_BEZIER;
-		}
-		else if (!Q_stricmp(type, "splinecatmullrom")) {
-			cp->type = CAMERA_SPLINE_CATMULLROM;
-		}
-		else {
-			cp->type = CAMERA_SPLINE_BEZIER;
-		}
-		cp->viewType = CAMERA_ANGLES_SPLINE;
-		cp->rollType = CAMERA_ROLL_AS_ANGLES;
-		cp->splineType = SPLINE_FIXED;
-		cp->numSplines = DEFAULT_NUM_SPLINES;
-		cp->viewEnt = -1;
-		cp->fov = -1;
-		cp->fovType = CAMERA_FOV_USE_CURRENT;
-
-		cp->flags = CAM_ORIGIN | CAM_ANGLES | CAM_FOV;
-	}
-
-	LastAddedCameraPointSet = qtrue;
-
-	cp->useOriginVelocity = qfalse;
-	cp->useAnglesVelocity = qfalse;
-	cp->useXoffsetVelocity = qfalse;
-	cp->useYoffsetVelocity = qfalse;
-	cp->useZoffsetVelocity = qfalse;
-	cp->useFovVelocity = qfalse;
-	cp->useRollVelocity = qfalse;
-
-	if (cg.viewEnt > -1) {
-		cp->viewType = CAMERA_ANGLES_ENT;
-		cp->viewEnt = cg.viewEnt;
-		cp->offsetType = CAMERA_OFFSET_INTERP;
-		cp->xoffset = cg.viewEntOffsetX;
-		cp->yoffset = cg.viewEntOffsetY;
-		cp->zoffset = cg.viewEntOffsetZ;
-		VectorCopy(cg_entities[cg.viewEnt].lerpOrigin, cp->viewEntStartingOrigin);
-		//VectorCopy(cg_entities[cg.viewEnt].currentState.pos.trBase, cp->viewEntStartingOrigin);
-		cp->viewEntStartingOriginSet = qtrue;
-	}
-
-	if (incrementCameraPoints) {
-		cg.numCameraPoints++;
-	}
-
-	LastAddedCameraPointPtr = cp;
-
-	if (lastAdded) {
-		CG_UpdateCameraInfoExt(cg.numCameraPoints - 1);
-	}
-	else {
-		CG_UpdateCameraInfo();
-	}
-
-	cg.selectedCameraPointMin = cameraPointNum;
-	cg.selectedCameraPointMax = cameraPointNum;
-
-	//Com_Printf("add camera point selected : %d\n", cg.selectedCameraPointMin);
 }
