@@ -747,6 +747,7 @@ typedef struct {
 
 	int time;                   // this is the time value that the client
 								// is rendering at.
+	double ftime;               // cg.time + (cg.foverf / 1000.0)
 	int oldTime;                // time at last frame, used for missile trails and prediction checking
 
 	int physicsTime;            // either cg.snap->time or cg.nextSnap->time
@@ -1826,6 +1827,15 @@ extern vmCvar_t cg_descriptiveText;
 // TTimo
 extern vmCvar_t cg_autoReload;
 extern vmCvar_t cg_antilag;
+
+extern vmCvar_t cg_cameraRewindTime;
+extern vmCvar_t cg_cameraQue;
+extern vmCvar_t cg_cameraAddUsePreviousValues;
+extern vmCvar_t cg_cameraUpdateFreeCam;
+extern vmCvar_t cg_cameraDefaultOriginType;
+extern vmCvar_t cg_cameraDebugPath;
+extern vmCvar_t cg_cameraSmoothFactor;
+extern vmCvar_t cg_q3mmeCameraSmoothPos;
 
 extern vmCvar_t	demo_drawBlood;
 extern vmCvar_t demo_screenshake;

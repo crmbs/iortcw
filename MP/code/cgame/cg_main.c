@@ -286,6 +286,15 @@ vmCvar_t cg_bluelimbotime;
 vmCvar_t cg_autoReload;
 vmCvar_t cg_antilag;
 
+vmCvar_t cg_cameraRewindTime;
+vmCvar_t cg_cameraQue;
+vmCvar_t cg_cameraUpdateFreeCam;
+vmCvar_t cg_cameraDefaultOriginType;
+vmCvar_t cg_cameraAddUsePreviousValues;
+vmCvar_t cg_cameraDebugPath;
+vmCvar_t cg_cameraSmoothFactor;
+vmCvar_t cg_q3mmeCameraSmoothPos;
+
 vmCvar_t demo_drawBlood;
 vmCvar_t demo_screenshake;
 
@@ -495,6 +504,15 @@ cvarTable_t cvarTable[] = {
 	{ &cg_autoReload, "cg_autoReload", "1", CVAR_ARCHIVE },
 
 	{ &cg_antilag, "g_antilag", "0", 0 },
+
+	{ &cg_cameraRewindTime, "cg_cameraRewindTime", "0", CVAR_ARCHIVE },
+	{ &cg_cameraQue, "cg_cameraQue", "1", CVAR_ARCHIVE },
+	{ &cg_cameraUpdateFreeCam, "cg_cameraUpdateFreeCam", "1", CVAR_ARCHIVE },
+	{ &cg_cameraAddUsePreviousValues, "cg_cameraAddUsePreviousValues", "1", CVAR_ARCHIVE },
+	{ &cg_cameraDefaultOriginType, "cg_cameraDefaultOriginType", "splineBezier", CVAR_ARCHIVE },
+	{ &cg_cameraDebugPath, "cg_cameraDebugPath", "0", CVAR_ARCHIVE },
+	{ &cg_cameraSmoothFactor, "cg_cameraSmoothFactor", "1.5", CVAR_ARCHIVE },
+	{ &cg_q3mmeCameraSmoothPos, "0", CVAR_ARCHIVE },
 
 	{ &demo_drawBlood, "demo_drawBlood", "1", CVAR_ARCHIVE },
 	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT }
