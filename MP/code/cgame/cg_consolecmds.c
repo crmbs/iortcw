@@ -513,6 +513,9 @@ static void CG_DumpLocation_f( void ) {
 			   (int) cg.snap->ps.origin[0], (int) cg.snap->ps.origin[1], (int) cg.snap->ps.origin[2] );
 }
 
+static cameraPoint_t* LastAddedCameraPointPtr = NULL;
+static qboolean LastAddedCameraPointSet = qfalse;
+
 static void CG_AddCameraPoint_f(void)
 {
 	cameraPoint_t* cp;
