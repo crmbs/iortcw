@@ -995,6 +995,54 @@ typedef struct {
 
 	pmoveExt_t pmext;
 
+	// freecam
+	qboolean		freecam;
+	qboolean freecamAnglesSet;
+	vec3_t			fpos;
+	vec3_t			fang;
+	vec3_t			fvelocity;
+	qboolean freecamSet;  // at least one switch to freecam so fpos an fang valid
+	int				mousex;
+	int				mousey;
+	int				mouseButton2;
+	int				mouseButton1;
+	int				keyu;
+	int				keyd;
+	int				keyf;
+	int				keyb;
+	int				keyr;
+	int				keyl;
+	int				keya;
+	int				keyrollright;
+	int keyrollleft;
+	int keyrollstopzero;
+	int keyspeed;
+
+	int				fMoveTime;
+	playerState_t	freecamPlayerState;
+	double positionSetTime;
+
+	int				freecamFireTime;
+	qboolean		recordPath;
+	qhandle_t		recordPathFile;
+	int	recordPathLastServerTime;
+	qboolean		playPath;
+	//int				playPathSkipNum;
+	//qboolean		playPathStarted;
+	//int	playPathCommandStartServerTime;
+	int pathServerTimeStart;
+	int pathRealTimeStart;
+	float pathTimescale;
+	int pathCGTimeStart;
+	double pathCurrentTime;
+	vec3_t pathCurrentOrigin;
+	vec3_t pathCurrentAngles;
+	double pathNextTime;
+	vec3_t pathNextOrigin;
+	vec3_t pathNextAngles;
+	int playPathCount;
+
+	// camera
 	rawCameraPathKeyPoint_t rawCameraPoints[MAX_RAWCAMERAPOINTS];
 	int numRawCameraPoints;
 
