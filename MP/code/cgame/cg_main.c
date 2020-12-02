@@ -512,7 +512,7 @@ cvarTable_t cvarTable[] = {
 	{ &cg_cameraDefaultOriginType, "cg_cameraDefaultOriginType", "splineBezier", CVAR_ARCHIVE },
 	{ &cg_cameraDebugPath, "cg_cameraDebugPath", "0", CVAR_ARCHIVE },
 	{ &cg_cameraSmoothFactor, "cg_cameraSmoothFactor", "1.5", CVAR_ARCHIVE },
-	{ &cg_q3mmeCameraSmoothPos, "0", CVAR_ARCHIVE },
+	//{ &cg_q3mmeCameraSmoothPos, "0", CVAR_ARCHIVE },
 
 	{ &demo_drawBlood, "demo_drawBlood", "1", CVAR_ARCHIVE },
 	{ &demo_screenshake, "demo_screenshake", "1", CVAR_CHEAT }
