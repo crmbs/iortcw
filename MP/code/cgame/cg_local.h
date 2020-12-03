@@ -2188,7 +2188,7 @@ void    CG_ParticleDust( centity_t *cent, vec3_t origin, vec3_t dir );
 void    CG_ParticleMisc( qhandle_t pshader, vec3_t origin, int size, int duration, float alpha );
 
 // Ridah
-void CG_ParticleExplosion( char *animStr, vec3_t origin, vec3_t vel, int duration, int sizeStart, int sizeEnd );
+void CG_ParticleExplosion(const char* animStr, vec3_t origin, vec3_t vel, int duration, int sizeStart, int sizeEnd);
 
 // Rafael snow pvs check
 void    CG_SnowLink( centity_t *cent, qboolean particleOn );
