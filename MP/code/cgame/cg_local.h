@@ -1252,11 +1252,7 @@ typedef struct {
 
 	// Rafael - cannon
 	qhandle_t smokePuffShaderdirty;
-	qhandle_t smokePuffShaderb1;
-	qhandle_t smokePuffShaderb2;
-	qhandle_t smokePuffShaderb3;
-	qhandle_t smokePuffShaderb4;
-	qhandle_t smokePuffShaderb5;
+	qhandle_t smokePuffShaderb[5];
 	// done
 
 	// Rafael - blood pool

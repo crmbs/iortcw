@@ -87,7 +87,6 @@ typedef enum
 	P_ROTATE, // unused
 	P_WEATHER_TURBULENT,
 	P_ANIM,
-	P_DLIGHT_ANIM,
 	P_BLEED,
 	P_FLAT_SCALEUP,
 	P_FLAT_SCALEUP_FADE,
@@ -850,7 +849,6 @@ void CG_AddParticleToScene(cparticle_t *p, vec3_t org, float alpha)
 	}
 	break;
 	case P_ANIM:
-	case P_DLIGHT_ANIM:
 	{
 		vec3_t point, rr, ru, rotate_ang;
 		float  width, height;
@@ -873,14 +871,6 @@ void CG_AddParticleToScene(cparticle_t *p, vec3_t org, float alpha)
 
 		width  = p->width + (ratio * (p->endwidth - p->width));
 		height = p->height + (ratio * (p->endheight - p->height));
-
-		// add dlight if necessary
-		if (p->type == P_DLIGHT_ANIM)
-		{
-			// fixme: support arbitrary color
-			trap_R_AddLightToScene(org, 320,        //%	1.5 * (width > height ? width : height),
-			                       1.25f * (1.0f - ratio), 1.0f, 0.95f, 0.85f, 0, 0);
-		}
 
 		// if we are "inside" this sprite, don't draw
 		if (VectorDistanceSquared(cg.snap->ps.origin, org) < Square(width / 1.5f))
@@ -1048,7 +1038,6 @@ void CG_AddParticles(void)
 		{
 		case P_SMOKE:
 		case P_ANIM:
-		case P_DLIGHT_ANIM:
 		case P_BLEED:
 		case P_SMOKE_IMPACT:
 		case P_WEATHER_FLURRY:
@@ -1624,15 +1613,7 @@ void CG_ParticleExplosion(const char *animStr, vec3_t origin, vec3_t vel, int du
 
 	p->endtime   = cg.time + duration;
 	p->startfade = cg.time;
-
-	if (dlight)
-	{
-		p->type = P_DLIGHT_ANIM;
-	}
-	else
-	{
-		p->type = P_ANIM;
-	}
+	p->type = P_ANIM;
 
 	VectorCopy(origin, p->org);
 	VectorCopy(vel, p->vel);
