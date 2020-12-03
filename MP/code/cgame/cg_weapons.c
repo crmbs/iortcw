@@ -2618,7 +2618,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 						float alpha;
 						alpha = 1.0f - ( (float)( cg.time - cent->muzzleFlashTime ) / (float)BARREL_SMOKE_TIME ); // what fraction of BARREL_SMOKE_TIME are we at
 						alpha *= 0.25f;     // .25 max alpha
-						CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 30, alpha, 8.f) );
+						CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 30, alpha, 8.f );
 					}
 				}
 			}
