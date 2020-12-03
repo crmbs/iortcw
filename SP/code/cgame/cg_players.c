@@ -5067,7 +5067,7 @@ void CG_Player( centity_t *cent ) {
 		// smoke
 		if ( !cg_paused.integer ) {    // don't add while paused
 			if ( !( rand() % 3 ) ) {
-				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, acc.origin, tv( 0,0,1 ), 1, 1000, 6, 4, 10, 0.15f );
+				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, acc.origin, tv( 0,0,1 ), 1, 1000, 6, 4, 10, 0.15f, 8.f) );
 			}
 		}
 	}

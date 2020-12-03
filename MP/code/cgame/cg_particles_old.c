@@ -1746,7 +1746,7 @@ void CG_ParticleImpactSmokePuffExtended( qhandle_t pshader, vec3_t origin, int l
 }
 
 void CG_ParticleImpactSmokePuff( qhandle_t pshader, vec3_t origin ) {
-	CG_ParticleImpactSmokePuffExtended( pshader, origin, 500, 20, 20, 30, 0.25f );
+	CG_ParticleImpactSmokePuffExtended( pshader, origin, 500, 20, 20, 30, 0.25f) );
 }
 
 

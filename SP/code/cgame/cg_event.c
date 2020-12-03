@@ -2493,7 +2493,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			CG_ParticleSmoke( cgs.media.smokePuffShaderdirty, cent );
 		} else if ( cent->currentState.density == 7 ) {	// steam
 			// steam from panzerfaust casing
-			CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->currentState.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, 0.25f );
+			CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->currentState.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, 0.25f, 8.f) );
 		} else if ( !( cent->currentState.density ) ) {
 			CG_ParticleSmoke( cgs.media.smokePuffShader, cent );
 		} else {

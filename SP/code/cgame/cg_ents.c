@@ -1003,7 +1003,7 @@ static void CG_Item( centity_t *cent ) {
 				if ( !Q_stricmp( item->classname, "item_health_turkey" ) ) {
 					if ( !cg_paused.integer ) {    // don't add while paused
 						if ( !( rand() % 7 ) ) {
-							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->lerpOrigin, tv( 0,0,1 ), 6, 2000, 4, 10, 16, 0.2f );
+							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->lerpOrigin, tv( 0,0,1 ), 6, 2000, 4, 10, 16, 0.2f, 8.f) );
 						}
 					}
 				}
@@ -1653,7 +1653,7 @@ static void CG_Efx( centity_t *cent ) {
 			// smoking dead light
 			if ( !cg_paused.integer ) {    // don't add while paused
 				if ( !( rand() % 3 ) ) {
-					CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->currentState.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, 0.25f );
+					CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->currentState.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, 0.25f, 8.f) );
 				}
 			}
 		}
@@ -2324,7 +2324,7 @@ static void CG_ProcessEntity( centity_t *cent ) {
 		if ( cent->currentState.frame == 2 ) {     // dead
 			if ( !cg_paused.integer ) {    // don't add while paused
 				if ( !( rand() % 7 ) ) {
-					CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->lerpOrigin, tv( 0,0,1 ), 6, 2000, 4, 10, 16, 0.2f );
+					CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, cent->lerpOrigin, tv( 0,0,1 ), 6, 2000, 4, 10, 16, 0.2f, 8.f) );
 				}
 			}
 		}
