@@ -1085,6 +1085,7 @@ typedef struct {
 	vec3_t lastSetChaseMoveAngles;
 	int lastAutoChaseMissileEnt;
 
+	refdef_t* refdef_current;
 } cg_t;
 
 #define NUM_FUNNEL_SPRITES  21
@@ -2199,7 +2200,8 @@ void CG_ParticleBat( centity_t *cent );
 void    CG_ParticleBats( qhandle_t pshader, centity_t *cent );
 void    CG_BatsUpdatePosition( centity_t *cent );
 void CG_ParticleImpactSmokePuff( qhandle_t pshader, vec3_t origin );
-void CG_ParticleImpactSmokePuffExtended( qhandle_t pshader, vec3_t origin, int lifetime, int vel, int acc, int maxroll, float alpha );       // (SA) so I can add more parameters without screwing up the one that's there
+//void CG_ParticleImpactSmokePuffExtended( qhandle_t pshader, vec3_t origin, int lifetime, int vel, int acc, int maxroll, float alpha );       // (SA) so I can add more parameters without screwing up the one that's there
+void CG_ParticleImpactSmokePuffExtended(qhandle_t pshader, vec3_t origin, int lifetime, int vel, int acc, int maxroll, float alpha, float size);        // so I can add more parameters without screwing up the one that's there
 void CG_Particle_Bleed( qhandle_t pshader, vec3_t start, vec3_t dir, int fleshEntityNum, int duration );
 void CG_GetBleedOrigin( vec3_t head_origin, vec3_t torso_origin, vec3_t legs_origin, int fleshEntityNum );
 void CG_Particle_OilParticle( qhandle_t pshader, vec3_t origin, vec3_t origin2, int ptime, int snum );
