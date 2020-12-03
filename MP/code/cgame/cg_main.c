@@ -1501,19 +1501,20 @@ static void CG_RegisterGraphics( void ) {
 	}
 
 	CG_LoadingString( " - particles" );
-	CG_ClearParticles();
+	CG_InitParticles();
+	//CG_ClearParticles();
 
-	for ( i = 1; i < MAX_PARTICLES_AREAS; i++ )
-	{
-		{
-			int rval;
+	//for ( i = 1; i < MAX_PARTICLES_AREAS; i++ )
+	//{
+	//	{
+	//		int rval;
 
-			rval = CG_NewParticleArea( CS_PARTICLES + i );
-			if ( !rval ) {
-				break;
-			}
-		}
-	}
+	//		rval = CG_NewParticleArea( CS_PARTICLES + i );
+	//		if ( !rval ) {
+	//			break;
+	//		}
+	//	}
+	//}
 
 	// NERVE - SMF - register WolfMP models and skins
 	{
