@@ -373,7 +373,7 @@ void CG_AddEmitter( localEntity_t *le ) {
 		break;
 	case 3:     // steam
 		nextTime = 100;
-		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, le->angles.trBase, 8, 1000, 8, le->radius, 20, 0.25f, 8.f) );
+		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, le->angles.trBase, 8, 1000, 8, le->radius, 20, 0.25f, 8.f );
 		break;
 	case 4:     // wine
 		VectorScale( le->angles.trBase, le->radius, dir );
@@ -381,7 +381,7 @@ void CG_AddEmitter( localEntity_t *le ) {
 		break;
 	case 5:     // smoke
 		nextTime = 100;
-		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, dir, 8, 1000, 8, 20, 20, 0.25f, 8.f) );
+		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, dir, 8, 1000, 8, 20, 20, 0.25f, 8.f );
 		break;
 	case 6:     // electrical
 		nextTime = 100;
@@ -391,7 +391,7 @@ void CG_AddEmitter( localEntity_t *le ) {
 	case 0:
 	default:
 		nextTime = 100;
-		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, dir, 8, 1000, 8, 20, 20, 0.25f, 8.f) );
+		CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, le->pos.trBase, dir, 8, 1000, 8, 20, 20, 0.25f, 8.f );
 		break;
 	}
 
@@ -456,7 +456,7 @@ void CG_AddFragment( localEntity_t *le ) {
 				alpha *= 0.25f;
 				memset( &flash, 0, sizeof( flash ) );
 				CG_PositionEntityOnTag( &flash, &le->refEntity, "tag_flash", 0, NULL );
-				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, alpha, 8.f) );
+				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, tv( 0,0,1 ), 8, 1000, 8, 20, 20, alpha, 8.f );
 			}
 		}
 	}

@@ -418,7 +418,7 @@ void CG_AddFragment( localEntity_t *le ) {
 			alpha *= 0.25f;
 			memset( &flash, 0, sizeof( flash ) );
 			CG_PositionEntityOnTag( &flash, &le->refEntity, "tag_flash", 0, NULL );
-			CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 20, alpha, 8.f);
+			CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 20, alpha, 8.f );
 		}
 	}
 //----(SA)	end

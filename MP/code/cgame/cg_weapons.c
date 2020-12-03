@@ -2605,9 +2605,9 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 						alpha = 1.0f - ( (float)( cg.time - cent->overheatTime ) / 3000.0f );
 						alpha *= 0.25f;     // .25 max alpha
 						if ( weaponNum == WP_VENOM ) { // silly thing that makes the smoke off the venom swirlier since it's spinning real fast
-							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 70, alpha, 8.f));
+							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 70, alpha, 8.f );
 						} else {
-							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 30, alpha, 8.f) );
+							CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 1000, 8, 20, 30, alpha, 8.f );
 						}
 					}
 				}
@@ -2656,7 +2656,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 		if ( weaponNum == WP_STEN || weaponNum == WP_VENOM ) {
 			if ( cg.time - cent->muzzleFlashTime < 100 ) {
 //				CG_ParticleImpactSmokePuff (cgs.media.smokeParticleShader, flash.origin);
-				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 500, 8, 20, 30, 0.25f, 8.f) );
+				CG_ParticleImpactSmokePuffExtended( cgs.media.smokeParticleShader, flash.origin, 500, 8, 20, 30, 0.25f, 8.f );
 			}
 		}
 	}
