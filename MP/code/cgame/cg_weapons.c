@@ -4764,6 +4764,11 @@ void CG_AddDebris( vec3_t origin, vec3_t dir, int speed, int duration, int count
 	float timeAdd;
 	int i;
 
+	if (!cg_visualEffects.integer)
+	{
+		return;
+	}
+
 	for ( i = 0; i < count; i++ ) {
 		le = CG_AllocLocalEntity();
 		re = &le->refEntity;

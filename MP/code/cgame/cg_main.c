@@ -213,6 +213,7 @@ vmCvar_t cg_wolfparticles;
 vmCvar_t cg_atmosphericEffects;
 vmCvar_t cg_lowAtmosphericEffects;
 vmCvar_t cg_forceAtmosphericEffects;
+vmCvar_t cg_visualEffects;
 
 // Ridah
 vmCvar_t cg_gameType;
@@ -453,6 +454,7 @@ cvarTable_t cvarTable[] = {
 	{ &cg_atmosphericEffects, "cg_atmosphericEffects", "1", CVAR_ARCHIVE, },
 	{ &cg_lowAtmosphericEffects, "cg_lowAtmosphericEffects", "1", 0 },
 	{ &cg_forceAtmosphericEffects, "cg_forceAtmosphericEffects", "0", CVAR_LATCH },
+	{ &cg_visualEffects, "cg_visualEffects", "1", CVAR_ARCHIVE, 0 },  // Draw visual effects (i.e : airstrike plane, debris ...)
 
 	// Ridah
 	{ &cg_gameType, "g_gametype", "0", 0 }, // communicated by systeminfo
