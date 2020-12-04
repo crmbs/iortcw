@@ -702,7 +702,7 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		//	re.RenderScene(VMA(1));
 		//}
 		if (demo_saveHud->integer) {
-			SCR_FillRect(0, 0, 640, 480, colorGrey);
+			//SCR_FillRect(0, 0, 640, 480, colorGrey);
 		}
 		else {
 			re.RenderScene(VMA(1));
