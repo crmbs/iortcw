@@ -2070,7 +2070,7 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			data = RB_SetColor( data );
 			break;
 		case RC_STRETCH_PIC:
-			if (if (demo_saveHud->integer) {
+			if (demo_saveHud->integer) {
 				data = RB_SkipRenderCommand(data);
 			}
 			else {
