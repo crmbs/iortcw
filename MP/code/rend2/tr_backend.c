@@ -2031,12 +2031,6 @@ static const void* RB_SkipRenderCommand(const void* data)
 	case RC_CLEARDEPTH:
 		data += sizeof(clearDepthCommand_t);
 		break;
-	case RC_BEGIN_HUD:
-		data += sizeof(beginHudCommand_t);
-		break;
-	case RC_DEBUG_GRAPHICS:
-		data += sizeof(debugGraphicsCommand_t);
-		break;
 	case RC_END_OF_LIST:
 		ri.Printf(PRINT_ALL, "^1RB_SkipRenderCommand():  called with RC_END_OF_LIST\n");
 		break;
@@ -2070,12 +2064,12 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			data = RB_SetColor( data );
 			break;
 		case RC_STRETCH_PIC:
-			if (demo_saveHud->integer) {
+			//if (demo_saveHud->integer) {
 				data = RB_SkipRenderCommand(data);
-			}
-			else {
-				data = RB_StretchPic(data);
-			}
+			//}
+			//else {
+			//	data = RB_StretchPic(data);
+			//}
 			break;
 		case RC_ROTATED_PIC:
 			data = RB_RotatedPic( data );
