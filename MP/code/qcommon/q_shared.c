@@ -1101,28 +1101,6 @@ int Q_parseColorString(const char* p, float* color) {
 	return 1 + Q_parseColor(p + 1, defaultColors, color);
 }
 
-int Q_PrintStrlen(const char* string) {
-	int len;
-	const char* p;
-
-	if (!string) {
-		return 0;
-	}
-
-	len = 0;
-	p = string;
-	while (*p) {
-		if (Q_IsColorString(p)) {
-			p += 2;
-			continue;
-		}
-		p++;
-		len++;
-	}
-
-	return len;
-}
-
 int Q_PrintStrlen( const char *string ) {
 	int len;
 	const char  *p;
