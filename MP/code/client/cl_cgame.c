@@ -692,21 +692,21 @@ intptr_t CL_CgameSystemCalls( intptr_t *args ) {
 		re.SetFog( args[1], args[2], args[3], VMF( 4 ), VMF( 5 ), VMF( 6 ), VMF( 7 ) );
 		return 0;
 	case CG_R_RENDERSCENE:
-		//if (demo_saveHud->string[0] != '0') {
-		//	vec3_t backgroundColor;
-		//	Q_parseColor(demo_saveHud->string, defaultColors, backgroundColor);
-		//	SCR_FillRect(0, 0, 640, 480, backgroundColor);
-		//	//qglClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
-		//}
-		//else {
-		//	re.RenderScene(VMA(1));
-		//}
-		if (demo_saveHud->integer) {
-			SCR_FillRect(0, 0, 640, 480, colorGrey);
+		if (demo_saveHud->string[0] != '0') {
+			vec3_t backgroundColor;
+			Q_parseColor(demo_saveHud->string, defaultColors, backgroundColor);
+			SCR_FillRect(0, 0, 640, 480, backgroundColor);
+			//qglClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0f);
 		}
 		else {
 			re.RenderScene(VMA(1));
 		}
+		//if (demo_saveHud->integer) {
+		//	SCR_FillRect(0, 0, 640, 480, colorGrey);
+		//}
+		//else {
+		//	re.RenderScene(VMA(1));
+		//}
 		return 0;
 	case CG_R_SETCOLOR:
 		re.SetColor( VMA( 1 ) );

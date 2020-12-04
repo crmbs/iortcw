@@ -991,40 +991,26 @@ const char *Q_stristr( const char *s, const char *find)
   return s;
 }
 
-vec3_t defaultColors[10] =
+vec4_t defaultColors[10] =
 {
-	{0.0f, 0.0f, 0.0f},
-	{1.0f, 0.0f, 0.0f},
-	{0.0f, 1.0f, 0.0f},
-	{1.0f, 1.0f, 0.0f},
-	{0.0f, 0.0f, 1.0f},
-	{0.0f, 1.0f, 1.0f},
-	{1.0f, 0.0f, 1.0f},
-	{1.0f, 1.0f, 1.0f},
-	{0.6f, 0.6f, 0.6f},
-	{0.01f, 0.01f, 0.02f},
+	{0.0f, 0.0f, 0.0f, 1.0f},
+	{1.0f, 0.0f, 0.0f, 1.0f},
+	{0.0f, 1.0f, 0.0f, 1.0f},
+	{1.0f, 1.0f, 0.0f, 1.0f},
+	{0.0f, 0.0f, 1.0f, 1.0f},
+	{0.0f, 1.0f, 1.0f, 1.0f},
+	{1.0f, 0.0f, 1.0f, 1.0f},
+	{1.0f, 1.0f, 1.0f, 1.0f},
+	{0.6f, 0.6f, 0.6f, 1.0f},
+	{0.01f, 0.01f, 0.02f, 1.0f},
 };
 
-vec3_t ospColors[10] =
-{
-	{1.0f, 1.0f, 1.0f},
-	{1.0f, 0.2f, 0.2f},
-	{0.2f, 1.0f, 0.2f},
-	{1.0f, 1.0f, 0.1f},
-	{0.2f, 0.2f, 1.0f},
-	{1.0f, 0.1f, 1.0f},
-	{0.1f, 1.0f, 1.0f},
-	{1.0f, 0.59f, 0.12f},
-	{0.65f, 0.2f, 0.65f},
-	{0.6f, 0.6f, 1.0f},
-};
-
-int Q_parseColor(const char* p, const vec3_t numberColors[10], float* color) {
+int Q_parseColor(const char* p, const vec4_t numberColors[10], float* color) {
 	char c = *p++;
 	if (c >= '0' && c <= '9') {
 		if (!color)
 			return 1;
-		memcpy(color, numberColors + c - '0', sizeof(vec3_t));
+		memcpy(color, numberColors + c - '0', sizeof(vec4_t));
 		return 1;
 	}
 	else if ((c >= 'a' && c < 'x') || (c >= 'A' && c < 'X')) {
@@ -1039,16 +1025,19 @@ int Q_parseColor(const char* p, const vec3_t numberColors[10], float* color) {
 			color[0] = v;
 			color[1] = 1 - v;
 			color[2] = 0;
+			color[3] = 1.0f
 		}
 		else if (deg <= 240) {
 			color[0] = 0;
 			color[1] = v;
 			color[2] = 1 - v;
+			color[3] = 1.0f
 		}
 		else {
 			color[0] = 1 - v;
 			color[1] = 0;
 			color[2] = v;
+			color[3] = 1.0f
 		}
 		return 1;
 	}
@@ -1086,7 +1075,7 @@ int Q_parseColor(const char* p, const vec3_t numberColors[10], float* color) {
 		return 7;
 	}
 	if (color) {
-		color[0] = color[1] = color[2] = 1.0f;
+		color[0] = color[1] = color[2] = color[3] = 1.0f;
 	}
 	return 0;
 }
