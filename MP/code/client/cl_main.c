@@ -170,6 +170,8 @@ cvar_t	*cl_rate;
 cvar_t  *cl_demoFile;
 cvar_t  *cl_demoFileBaseName;
 
+cvar_t  *demo_saveHud;
+
 clientActive_t cl;
 clientConnection_t clc;
 clientStatic_t cls;
@@ -4339,6 +4341,8 @@ void CL_Init( void ) {
 
 	cl_demoFile = Cvar_Get("cl_demoFile", "", CVAR_ROM);
 	cl_demoFileBaseName = Cvar_Get("cl_demoFileBaseName", "", CVAR_ROM);
+
+	demo_saveHud = Cvar_Get("demo_saveHud", "0", CVAR_CHEAT);
 
 	Q_strncpyz( cls.autoupdateServerNames[0], AUTOUPDATE_SERVER1_NAME, MAX_QPATH );
 	Q_strncpyz( cls.autoupdateServerNames[1], AUTOUPDATE_SERVER2_NAME, MAX_QPATH );

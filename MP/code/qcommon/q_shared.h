@@ -458,6 +458,11 @@ extern vec4_t colorLtGrey;
 extern vec4_t colorMdGrey;
 extern vec4_t colorDkGrey;
 
+extern vec3_t defaultColors[10];
+extern vec3_t ospColors[10];
+int Q_parseColorString(const char* p, float* color);
+int Q_parseColor(const char* p, const vec3_t numberColors[10], float* color);
+
 #define Q_COLOR_ESCAPE  '^'
 qboolean Q_IsColorString(const char *p);  // ^[0-9a-zA-Z]
 

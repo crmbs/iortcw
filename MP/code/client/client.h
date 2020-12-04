@@ -529,6 +529,8 @@ extern cvar_t  *cl_language;
 extern cvar_t* cl_demoFile;
 extern cvar_t* cl_demoFileBaseName;
 
+extern cvar_t* demo_saveHud;
+
 //
 // cl_main
 //

@@ -991,6 +991,137 @@ const char *Q_stristr( const char *s, const char *find)
   return s;
 }
 
+vec3_t defaultColors[10] =
+{
+	{0.0f, 0.0f, 0.0f},
+	{1.0f, 0.0f, 0.0f},
+	{0.0f, 1.0f, 0.0f},
+	{1.0f, 1.0f, 0.0f},
+	{0.0f, 0.0f, 1.0f},
+	{0.0f, 1.0f, 1.0f},
+	{1.0f, 0.0f, 1.0f},
+	{1.0f, 1.0f, 1.0f},
+	{0.6f, 0.6f, 0.6f},
+	{0.01f, 0.01f, 0.02f},
+};
+
+vec3_t ospColors[10] =
+{
+	{1.0f, 1.0f, 1.0f},
+	{1.0f, 0.2f, 0.2f},
+	{0.2f, 1.0f, 0.2f},
+	{1.0f, 1.0f, 0.1f},
+	{0.2f, 0.2f, 1.0f},
+	{1.0f, 0.1f, 1.0f},
+	{0.1f, 1.0f, 1.0f},
+	{1.0f, 0.59f, 0.12f},
+	{0.65f, 0.2f, 0.65f},
+	{0.6f, 0.6f, 1.0f},
+};
+
+int Q_parseColor(const char* p, const vec3_t numberColors[10], float* color) {
+	char c = *p++;
+	if (c >= '0' && c <= '9') {
+		if (!color)
+			return 1;
+		memcpy(color, numberColors + c - '0', sizeof(vec3_t));
+		return 1;
+	}
+	else if ((c >= 'a' && c < 'x') || (c >= 'A' && c < 'X')) {
+		int deg;
+		float angle, v;
+		if (!color)
+			return 1;
+		deg = (((c | 32) - 'a') * 360) / 24;
+		angle = (DEG2RAD(deg % 120));
+		v = ((cos(angle) / cos((M_PI / 3) - angle)) + 1) / 3;
+		if (deg <= 120) {
+			color[0] = v;
+			color[1] = 1 - v;
+			color[2] = 0;
+		}
+		else if (deg <= 240) {
+			color[0] = 0;
+			color[1] = v;
+			color[2] = 1 - v;
+		}
+		else {
+			color[0] = 1 - v;
+			color[1] = 0;
+			color[2] = v;
+		}
+		return 1;
+	}
+	else if (c == 'x' || c == 'X') {
+		int i;
+		int val;
+		for (i = 0; i < 6; i++) {
+			int readHex;
+			c = p[i];
+			if (c >= '0' && c <= '9') {
+				readHex = c - '0';
+			}
+			else if (c >= 'a' && c <= 'f') {
+				readHex = 0xa + c - 'a';
+			}
+			else if (c >= 'A' && c <= 'F') {
+				readHex = 0xa + c - 'A';
+			}
+			else {
+				if (color) {
+					color[0] = color[1] = color[2] = 1.0f;
+				}
+				return 1;
+			}
+			if (!color)
+				continue;
+			if (i & 1) {
+				val |= readHex;
+				color[i >> 1] = val * (1 / 255.0f);
+			}
+			else {
+				val = readHex << 4;
+			}
+		}
+		return 7;
+	}
+	if (color) {
+		color[0] = color[1] = color[2] = 1.0f;
+	}
+	return 0;
+}
+
+int Q_parseColorString(const char* p, float* color) {
+	char c;
+	if (!p)
+		return 0;
+	c = *p;
+	if (!c || c != Q_COLOR_ESCAPE)
+		return 0;
+	return 1 + Q_parseColor(p + 1, defaultColors, color);
+}
+
+int Q_PrintStrlen(const char* string) {
+	int len;
+	const char* p;
+
+	if (!string) {
+		return 0;
+	}
+
+	len = 0;
+	p = string;
+	while (*p) {
+		if (Q_IsColorString(p)) {
+			p += 2;
+			continue;
+		}
+		p++;
+		len++;
+	}
+
+	return len;
+}
 
 int Q_PrintStrlen( const char *string ) {
 	int len;
