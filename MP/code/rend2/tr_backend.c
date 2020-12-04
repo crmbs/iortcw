@@ -2000,6 +2000,54 @@ const void *RB_ExportCubemaps(const void *data)
 	return (const void *)(cmd + 1);
 }
 
+static const void* RB_SkipRenderCommand(const void* data)
+{
+	data = PADP(data, sizeof(void*));
+	switch (*(const int*)data) {
+	case RC_SET_COLOR:
+		data += sizeof(setColorCommand_t);
+		break;
+	case RC_STRETCH_PIC:
+		data += sizeof(stretchPicCommand_t);
+		break;
+	case RC_DRAW_SURFS:
+		data += sizeof(drawSurfsCommand_t);
+		break;
+	case RC_DRAW_BUFFER:
+		data += sizeof(drawBufferCommand_t);
+		break;
+	case RC_SWAP_BUFFERS:
+		data += sizeof(swapBuffersCommand_t);
+		break;
+	case RC_SCREENSHOT:
+		data += sizeof(screenshotCommand_t);
+		break;
+	case RC_VIDEOFRAME:
+		data += sizeof(videoFrameCommand_t);
+		break;
+	case RC_COLORMASK:
+		data += sizeof(colorMaskCommand_t);
+		break;
+	case RC_CLEARDEPTH:
+		data += sizeof(clearDepthCommand_t);
+		break;
+	case RC_BEGIN_HUD:
+		data += sizeof(beginHudCommand_t);
+		break;
+	case RC_DEBUG_GRAPHICS:
+		data += sizeof(debugGraphicsCommand_t);
+		break;
+	case RC_END_OF_LIST:
+		ri.Printf(PRINT_ALL, "^1RB_SkipRenderCommand():  called with RC_END_OF_LIST\n");
+		break;
+	default:
+		ri.Printf(PRINT_ALL, "^1RB_SkipRenderCommand():  unknown render xcommand: %d\n", *(const int*)data);
+		break;
+	}
+
+	return data;
+}
+
 /*
 ====================
 RB_ExecuteRenderCommands
@@ -2022,7 +2070,12 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			data = RB_SetColor( data );
 			break;
 		case RC_STRETCH_PIC:
-			data = RB_StretchPic( data );
+			if (if (demo_saveHud->integer) {
+				data = RB_SkipRenderCommand(data);
+			}
+			else {
+				data = RB_StretchPic(data);
+			}
 			break;
 		case RC_ROTATED_PIC:
 			data = RB_RotatedPic( data );
