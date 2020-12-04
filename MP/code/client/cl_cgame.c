@@ -499,22 +499,6 @@ static int  FloatAsInt( float f ) {
 	return fi.i;
 }
 
-vec4_t colorGrey = { 0.5, 0.5, 0.5, 1.0 };
-
-vec3_t defaultColors[10] =
-{
-	{0.5f, 0.5f, 0.5f},
-	{1.0f, 0.0f, 0.0f},
-	{0.0f, 1.0f, 0.0f},
-	{1.0f, 1.0f, 0.0f},
-	{0.0f, 0.0f, 1.0f},
-	{0.0f, 1.0f, 1.0f},
-	{1.0f, 0.0f, 1.0f},
-	{1.0f, 1.0f, 1.0f},
-	{0.6f, 0.6f, 0.6f},
-	{0.01f, 0.01f, 0.02f},
-};
-
 /*
 ====================
 CL_CgameSystemCalls
